@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Our Family Rentals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="../index.html"
+      style="position: fixed; top: 2rem; left: 2rem; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-weight: 500; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transition: all 0.2s ease; z-index: 1000"
+      onmouseover="this.style.background='#2563eb'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(59, 130, 246, 0.4)';"
+      onmouseout="this.style.background='#3b82f6'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)';"
+      >← Back</a
+    >
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex justify-between items-center">
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-emerald-700">Welcome to Our Family Rentals</h1>
+          <a href="admin-login.html" class="text-sm text-gray-600 hover:text-emerald-600 transition-colors"> Admin Login </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Introduction Section -->
+      <section class="mb-12 text-center">
+        <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4">Your Home Away From Home</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">Discover our carefully curated collection of comfortable rentals, each thoughtfully prepared for your stay. Browse available properties, check details, and book your perfect getaway with our easy self-service platform. We've made finding and booking your ideal accommodation simple and stress-free.</p>
+      </section>
+
+      <!-- Property Listing Section -->
+      <section>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-8 text-center">Available Properties</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <!-- Property Card 1 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <img src="https://placehold.co/400x250/E8F4FD/4A90A4?text=Cozy+Downtown+Loft" alt="Cozy Downtown Loft" class="w-full h-48 object-cover" />
+            <div class="p-6">
+              <h4 class="text-xl font-semibold text-gray-800 mb-2">Cozy Downtown Loft</h4>
+              <p class="text-gray-600 mb-4 leading-relaxed">Modern loft in the heart of downtown with exposed brick walls and city views. Perfect for urban explorers.</p>
+              <a href="property-detail.html?id=1" class="inline-block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg text-center transition-colors duration-200"> View Details </a>
+            </div>
+          </div>
+
+          <!-- Property Card 2 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <img src="https://placehold.co/400x250/FFF4E6/D4860A?text=Sunny+Beach+House" alt="Sunny Beach House" class="w-full h-48 object-cover" />
+            <div class="p-6">
+              <h4 class="text-xl font-semibold text-gray-800 mb-2">Sunny Beach House</h4>
+              <p class="text-gray-600 mb-4 leading-relaxed">Bright and airy beach house just steps from the sand. Wake up to ocean sounds and sunset views.</p>
+              <a href="property-detail.html?id=2" class="inline-block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg text-center transition-colors duration-200"> View Details </a>
+            </div>
+          </div>
+
+          <!-- Property Card 3 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <img src="https://placehold.co/400x250/F0F9E8/4A7C59?text=Rustic+Mountain+Cabin" alt="Rustic Mountain Cabin" class="w-full h-48 object-cover" />
+            <div class="p-6">
+              <h4 class="text-xl font-semibold text-gray-800 mb-2">Rustic Mountain Cabin</h4>
+              <p class="text-gray-600 mb-4 leading-relaxed">Escape to nature in this charming wooden cabin surrounded by pine trees and mountain trails.</p>
+              <a href="property-detail.html?id=3" class="inline-block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg text-center transition-colors duration-200"> View Details </a>
+            </div>
+          </div>
+
+          <!-- Property Card 4 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <img src="https://placehold.co/400x250/F5F3FF/6B46C1?text=Charming+City+Apartment" alt="Charming City Apartment" class="w-full h-48 object-cover" />
+            <div class="p-6">
+              <h4 class="text-xl font-semibold text-gray-800 mb-2">Charming City Apartment</h4>
+              <p class="text-gray-600 mb-4 leading-relaxed">Stylish apartment in vibrant neighborhood with easy access to cafes, shops, and public transport.</p>
+              <a href="property-detail.html?id=4" class="inline-block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg text-center transition-colors duration-200"> View Details </a>
+            </div>
+          </div>
+
+          <!-- Property Card 5 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <img src="https://placehold.co/400x250/E0F2FE/0891B2?text=Lakeside+Retreat" alt="Lakeside Retreat" class="w-full h-48 object-cover" />
+            <div class="p-6">
+              <h4 class="text-xl font-semibold text-gray-800 mb-2">Lakeside Retreat</h4>
+              <p class="text-gray-600 mb-4 leading-relaxed">Peaceful lakefront property with private dock and stunning water views. Perfect for a tranquil getaway.</p>
+              <a href="property-detail.html?id=5" class="inline-block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg text-center transition-colors duration-200"> View Details </a>
+            </div>
+          </div>
+
+          <!-- Property Card 6 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <img src="https://placehold.co/400x250/FDF2F8/BE185D?text=Garden+View+Studio" alt="Garden View Studio" class="w-full h-48 object-cover" />
+            <div class="p-6">
+              <h4 class="text-xl font-semibold text-gray-800 mb-2">Garden View Studio</h4>
+              <p class="text-gray-600 mb-4 leading-relaxed">Intimate studio overlooking beautiful botanical gardens. Cozy space perfect for solo travelers or couples.</p>
+              <a href="property-detail.html?id=6" class="inline-block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg text-center transition-colors duration-200"> View Details </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="text-center text-gray-600">
+          <p>&copy; 2024 Our Family Rentals. Making your stay comfortable and memorable.</p>
+          <p class="mt-2 text-sm">
+            <a href="admin-login.html" class="hover:text-emerald-600 transition-colors">Admin Portal</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

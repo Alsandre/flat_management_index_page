@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StaySpace - Find Your Perfect Stay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.css" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #3b82f6;
+        --primary-light: #60a5fa;
+        --primary-dark: #2563eb;
+        --text-primary: #1f2937;
+        --text-secondary: #6b7280;
+        --text-light: #9ca3af;
+        --background: #ffffff;
+        --background-gray: #f9fafb;
+        --border-light: #e5e7eb;
+        --border-medium: #d1d5db;
+        --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--text-primary);
+        background-color: var(--background);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      /* Header */
+      .header {
+        background: var(--background);
+        border-bottom: 1px solid var(--border-light);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      .nav {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav a {
+        text-decoration: none;
+        color: var(--text-primary);
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav a:hover {
+        color: var(--primary-color);
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, var(--background-gray) 0%, var(--background) 100%);
+        padding: 4rem 0;
+      }
+
+      .hero-content {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .hero p {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+      }
+
+      .search-form {
+        background: var(--background);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: var(--shadow-large);
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .form-input {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--border-light);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.2s ease;
+        background: var(--background);
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
+
+      .search-btn {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        height: fit-content;
+      }
+
+      .search-btn:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Properties Section */
+      .properties {
+        padding: 4rem 0;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-header h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .section-header p {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+      }
+
+      .properties-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .property-card {
+        background: var(--background);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow-medium);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .property-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-large);
+      }
+
+      .property-image {
+        width: 100%;
+        height: 240px;
+        background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 3rem;
+      }
+
+      .property-content {
+        padding: 1.5rem;
+      }
+
+      .property-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+      }
+
+      .property-description {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .property-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .property-price {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .property-price span {
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: var(--text-secondary);
+      }
+
+      .view-details-btn {
+        background: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+      }
+
+      .view-details-btn:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--background-gray);
+        padding: 3rem 0;
+        border-top: 1px solid var(--border-light);
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-section h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--primary-color);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .search-form {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .properties-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav {
+          gap: 1rem;
+        }
+
+        .container {
+          padding: 0 1rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero {
+          padding: 2rem 0;
+        }
+
+        .hero h1 {
+          font-size: 1.75rem;
+        }
+
+        .search-form {
+          padding: 1.5rem;
+        }
+
+        .properties {
+          padding: 2rem 0;
+        }
+
+        .properties-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="../index.html"
+      style="position: fixed; top: 2rem; left: 2rem; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-weight: 500; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transition: all 0.2s ease; z-index: 1000"
+      onmouseover="this.style.background='#2563eb'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(59, 130, 246, 0.4)';"
+      onmouseout="this.style.background='#3b82f6'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)';"
+      >← Back</a
+    >
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="index.html" class="logo">StaySpace</a>
+          <nav class="nav">
+            <a href="#properties">Properties</a>
+            <a href="#contact">Contact</a>
+            <a href="admin.html">Admin</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Find your perfect stay</h1>
+          <p>Discover beautiful properties in prime locations for your next getaway</p>
+
+          <form class="search-form">
+            <div class="form-group">
+              <label for="checkin">Check-in</label>
+              <input type="date" id="checkin" class="form-input" value="2024-03-15" />
+            </div>
+            <div class="form-group">
+              <label for="checkout">Check-out</label>
+              <input type="date" id="checkout" class="form-input" value="2024-03-18" />
+            </div>
+            <div class="form-group">
+              <label for="guests">Guests</label>
+              <select id="guests" class="form-input">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5">5+ Guests</option>
+              </select>
+            </div>
+            <button type="submit" class="search-btn">Search</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Properties Section -->
+    <section class="properties" id="properties">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Properties</h2>
+          <p>Hand-picked accommodations for the perfect stay</p>
+        </div>
+
+        <div class="properties-grid">
+          <div class="property-card">
+            <div class="property-image">🏠</div>
+            <div class="property-content">
+              <h3 class="property-title">Central Loft</h3>
+              <p class="property-description">Modern loft in the heart of downtown with stunning city views and premium amenities.</p>
+              <div class="property-footer">
+                <div class="property-price">$120 <span>per night</span></div>
+                <a href="property-details.html" class="view-details-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="property-card">
+            <div class="property-image">🌿</div>
+            <div class="property-content">
+              <h3 class="property-title">Garden View Studio</h3>
+              <p class="property-description">Peaceful studio apartment overlooking beautiful gardens with natural light throughout.</p>
+              <div class="property-footer">
+                <div class="property-price">$85 <span>per night</span></div>
+                <a href="property-details.html" class="view-details-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="property-card">
+            <div class="property-image">🏙️</div>
+            <div class="property-content">
+              <h3 class="property-title">City Apartment</h3>
+              <p class="property-description">Spacious two-bedroom apartment with modern kitchen and close to public transport.</p>
+              <div class="property-footer">
+                <div class="property-price">$150 <span>per night</span></div>
+                <a href="property-details.html" class="view-details-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="property-card">
+            <div class="property-image">🌊</div>
+            <div class="property-content">
+              <h3 class="property-title">Waterfront Suite</h3>
+              <p class="property-description">Luxury suite with panoramic water views and private balcony for unforgettable sunsets.</p>
+              <div class="property-footer">
+                <div class="property-price">$200 <span>per night</span></div>
+                <a href="property-details.html" class="view-details-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="property-card">
+            <div class="property-image">🏡</div>
+            <div class="property-content">
+              <h3 class="property-title">Cozy Cottage</h3>
+              <p class="property-description">Charming cottage in quiet neighborhood with private garden and rustic charm.</p>
+              <div class="property-footer">
+                <div class="property-price">$95 <span>per night</span></div>
+                <a href="property-details.html" class="view-details-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="property-card">
+            <div class="property-image">🏢</div>
+            <div class="property-content">
+              <h3 class="property-title">Executive Penthouse</h3>
+              <p class="property-description">Premium penthouse with rooftop terrace and high-end finishes for the ultimate experience.</p>
+              <div class="property-footer">
+                <div class="property-price">$300 <span>per night</span></div>
+                <a href="property-details.html" class="view-details-btn">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>📧 hello@stayspace.com</p>
+            <p>📞 (555) 123-4567</p>
+            <p>📍 123 Main Street, City Center</p>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <a href="#properties">Browse Properties</a>
+            <a href="booking.html">Make a Booking</a>
+            <a href="#contact">Contact Support</a>
+          </div>
+          <div class="footer-section">
+            <h3>About StaySpace</h3>
+            <p>We provide carefully curated accommodations for travelers seeking comfort, quality, and memorable experiences.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downtown Apartment - PropertyStay</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fafafa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .nav-menu {
+            display: none;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #2563eb;
+        }
+
+        .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .property-detail {
+            padding: 2rem 0;
+        }
+
+        .property-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .main-image {
+            width: 100%;
+            height: 300px;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 1.2rem;
+        }
+
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .thumbnail {
+            height: 80px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .thumbnail:hover {
+            background: #e5e7eb;
+        }
+
+        /* Property Info */
+        .property-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .property-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .property-address {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .property-description {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .amenities {
+            margin-bottom: 2rem;
+        }
+
+        .amenities h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+        }
+
+        .amenity-item::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .check-in-info h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .check-in-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Booking Sidebar */
+        .booking-sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .price-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 1.5rem;
+        }
+
+        .booking-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .booking-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .booking-form input,
+        .booking-form select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .booking-form input:focus,
+        .booking-form select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .date-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .price-breakdown {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-row.total {
+            font-weight: 700;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 0.5rem;
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        .book-now-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .book-now-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .reviews-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 1.2rem;
+        }
+
+        .review-placeholder {
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            padding: 2rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .nav-menu {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .main-image {
+                height: 400px;
+            }
+
+            .amenities-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .property-layout {
+                grid-template-columns: 2fr 1fr;
+                gap: 3rem;
+            }
+
+            .main-image {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">PropertyStay</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="property-details.html">Properties</a></li>
+                <li><a href="booking.html">Book Now</a></li>
+                <li><a href="admin-dashboard.html">Admin</a></li>
+            </ul>
+            <button class="menu-toggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> > <a href="#">Properties</a> > Downtown Apartment
+        </div>
+    </div>
+
+    <!-- Property Detail -->
+    <section class="property-detail">
+        <div class="container">
+            <div class="property-layout">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Image Gallery -->
+                    <div class="image-gallery">
+                        <div class="main-image">Downtown Apartment - Main Photo</div>
+                        <div class="thumbnail-grid">
+                            <div class="thumbnail">Living Room</div>
+                            <div class="thumbnail">Bedroom</div>
+                            <div class="thumbnail">Kitchen</div>
+                            <div class="thumbnail">Bathroom</div>
+                        </div>
+                    </div>
+
+                    <!-- Property Information -->
+                    <div class="property-info">
+                        <div class="property-header">
+                            <h1>Downtown Apartment</h1>
+                            <p class="property-address">123 Main Street, Downtown, City 12345</p>
+                        </div>
+
+                        <div class="property-description">
+                            <p>Experience the vibrant energy of downtown living in this beautifully appointed 2-bedroom apartment. Located in the heart of the city, you'll be within walking distance of the best restaurants, shops, entertainment venues, and cultural attractions.</p>
+                            
+                            <p>This modern apartment features an open-concept living space with floor-to-ceiling windows that flood the space with natural light. The fully equipped kitchen includes stainless steel appliances and granite countertops, perfect for preparing meals during your stay.</p>
+                            
+                            <p>Both bedrooms offer comfortable queen-size beds with premium linens, ensuring a restful night's sleep. The apartment also includes a dedicated workspace, making it ideal for business travelers who need to stay connected.</p>
+                        </div>
+
+                        <div class="amenities">
+                            <h3>Amenities</h3>
+                            <div class="amenities-grid">
+                                <div class="amenity-item">Free WiFi</div>
+                                <div class="amenity-item">Air Conditioning</div>
+                                <div class="amenity-item">Full Kitchen</div>
+                                <div class="amenity-item">Washer & Dryer</div>
+                                <div class="amenity-item">Smart TV</div>
+                                <div class="amenity-item">Parking Available</div>
+                                <div class="amenity-item">Pet Friendly</div>
+                                <div class="amenity-item">24/7 Security</div>
+                                <div class="amenity-item">Fitness Center</div>
+                            </div>
+                        </div>
+
+                        <div class="check-in-info">
+                            <h3>Check-in Instructions</h3>
+                            <p><strong>Check-in:</strong> 3:00 PM - 10:00 PM<br>
+                            <strong>Check-out:</strong> 11:00 AM</p>
+                            <p>Self check-in with keypad. You'll receive the access code 24 hours before your arrival. The building entrance is located on Main Street. Take the elevator to the 5th floor, apartment 5B.</p>
+                            <p>If you have any questions or need assistance during your stay, our support team is available 24/7 at (555) 123-4567.</p>
+                        </div>
+                    </div>
+
+                    <!-- Reviews Section -->
+                    <div class="reviews-section">
+                        <div class="reviews-header">
+                            <h3>Guest Reviews</h3>
+                            <div class="rating-summary">
+                                <span class="stars">★★★★★</span>
+                                <span>4.8 (24 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="review-placeholder">
+                            Reviews from verified guests will appear here after booking confirmations.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Sidebar -->
+                <div class="booking-sidebar">
+                    <div class="price-display">$120 <span style="font-size: 1rem; font-weight: normal;">/ night</span></div>
+                    
+                    <form class="booking-form">
+                        <div class="form-group">
+                            <div class="date-inputs">
+                                <div>
+                                    <label for="checkin-date">Check-in</label>
+                                    <input type="date" id="checkin-date" required>
+                                </div>
+                                <div>
+                                    <label for="checkout-date">Check-out</label>
+                                    <input type="date" id="checkout-date" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guests">Guests</label>
+                            <select id="guests">
+                                <option value="1">1 guest</option>
+                                <option value="2">2 guests</option>
+                                <option value="3">3 guests</option>
+                                <option value="4">4 guests</option>
+                            </select>
+                        </div>
+
+                        <div class="price-breakdown">
+                            <div class="price-row">
+                                <span>$120 × 3 nights</span>
+                                <span>$360</span>
+                            </div>
+                            <div class="price-row">
+                                <span>Cleaning fee</span>
+                                <span>$25</span>
+                            </div>
+                            <div class="price-row">
+                                <span>Service fee</span>
+                                <span>$30</span>
+                            </div>
+                            <div class="price-row total">
+                                <span>Total</span>
+                                <span>$415</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="book-now-btn">Book Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 

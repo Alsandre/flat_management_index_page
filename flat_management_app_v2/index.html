@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Garcia Family Properties - Cozy Rentals in the Heart of the City</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #8b4513;
+        --secondary-color: #deb887;
+        --accent-color: #cd853f;
+        --warm-white: #fff8dc;
+        --soft-green: #9caf88;
+        --text-dark: #5d4037;
+        --text-light: #8d6e63;
+        --shadow: 0 2px 10px rgba(139, 69, 19, 0.1);
+        --border-radius: 12px;
+      }
+
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background-color: var(--warm-white);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header Styles */
+      header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 1rem 0;
+        box-shadow: var(--shadow);
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .tagline {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        font-style: italic;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        transition: background-color 0.3s;
+      }
+
+      nav a:hover,
+      nav a.active {
+        background-color: var(--accent-color);
+      }
+
+      /* Page Sections */
+      .page {
+        display: none;
+        min-height: calc(100vh - 200px);
+        padding: 2rem 0;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      /* Homepage Styles */
+      .welcome-section {
+        text-align: center;
+        padding: 3rem 0;
+        background: linear-gradient(135deg, var(--secondary-color), var(--warm-white));
+        border-radius: var(--border-radius);
+        margin-bottom: 3rem;
+      }
+
+      .welcome-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      .welcome-section p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: var(--text-light);
+      }
+
+      .search-form {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .search-form input,
+      .search-form button {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--accent-color);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+      }
+
+      .search-form input {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .search-form button {
+        background-color: var(--accent-color);
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .search-form button:hover {
+        background-color: var(--primary-color);
+      }
+
+      /* Property Grid */
+      .properties-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .property-card {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: transform 0.3s;
+      }
+
+      .property-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .property-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(45deg, var(--secondary-color), var(--soft-green));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .property-content {
+        padding: 1.5rem;
+      }
+
+      .property-name {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+      }
+
+      .property-description {
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+      }
+
+      .property-price {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        transition: background-color 0.3s;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        width: 100%;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background-color: var(--accent-color);
+      }
+
+      .btn-secondary {
+        background-color: var(--soft-green);
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--accent-color);
+      }
+
+      /* Property Details Page */
+      .property-details {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .property-gallery {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .main-image {
+        width: 100%;
+        height: 400px;
+        background: linear-gradient(45deg, var(--secondary-color), var(--soft-green));
+        border-radius: var(--border-radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .thumbnails {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+      }
+
+      .thumbnail {
+        aspect-ratio: 1;
+        background: linear-gradient(45deg, var(--accent-color), var(--secondary-color));
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8rem;
+      }
+
+      .property-info h1 {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+      }
+
+      .property-address {
+        color: var(--text-light);
+        margin-bottom: 2rem;
+      }
+
+      .amenities {
+        margin: 2rem 0;
+      }
+
+      .amenities h3 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+
+      .amenities-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0.5rem;
+      }
+
+      .amenity-item {
+        background: var(--warm-white);
+        padding: 0.5rem;
+        border-radius: 8px;
+        border-left: 4px solid var(--accent-color);
+      }
+
+      /* Booking Sidebar */
+      .booking-sidebar {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        height: fit-content;
+        position: sticky;
+        top: 2rem;
+      }
+
+      .booking-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 0.75rem;
+        border: 2px solid var(--secondary-color);
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .price-breakdown {
+        background: var(--warm-white);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+
+      .price-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .total-price {
+        border-top: 2px solid var(--accent-color);
+        padding-top: 0.5rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      /* Admin Dashboard */
+      .dashboard {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 2rem;
+        min-height: 600px;
+      }
+
+      .admin-sidebar {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        height: fit-content;
+      }
+
+      .admin-sidebar h3 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid var(--secondary-color);
+        padding-bottom: 0.5rem;
+      }
+
+      .admin-nav {
+        list-style: none;
+      }
+
+      .admin-nav li {
+        margin-bottom: 0.5rem;
+      }
+
+      .admin-nav a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: var(--text-dark);
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s;
+      }
+
+      .admin-nav a:hover,
+      .admin-nav a.active {
+        background-color: var(--secondary-color);
+      }
+
+      .admin-content {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, var(--secondary-color), var(--warm-white));
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--primary-color);
+      }
+
+      .stat-label {
+        color: var(--text-light);
+        margin-top: 0.5rem;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 1px;
+        background: var(--secondary-color);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+      }
+
+      .calendar-header {
+        background: var(--primary-color);
+        color: white;
+        padding: 1rem 0.5rem;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .calendar-day {
+        background: white;
+        min-height: 100px;
+        padding: 0.5rem;
+        position: relative;
+      }
+
+      .calendar-day.booked {
+        background: #ffebee;
+      }
+
+      .calendar-day.available {
+        background: #e8f5e8;
+      }
+
+      .booking-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        margin: 2px 0;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--primary-color);
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 3rem;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section h4 {
+        margin-bottom: 1rem;
+        color: var(--secondary-color);
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: white;
+        text-decoration: none;
+        line-height: 1.8;
+      }
+
+      .footer-section a:hover {
+        color: var(--secondary-color);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .header-content {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        nav ul {
+          justify-content: center;
+          margin-top: 1rem;
+        }
+
+        .welcome-section h1 {
+          font-size: 2rem;
+        }
+
+        .search-form {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .properties-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .property-details {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .dashboard {
+          grid-template-columns: 1fr;
+        }
+
+        .admin-sidebar {
+          order: 2;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+
+        .thumbnails {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .calendar-grid {
+          font-size: 0.8rem;
+        }
+
+        .calendar-day {
+          min-height: 60px;
+          padding: 0.25rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 10px;
+        }
+
+        .welcome-section {
+          padding: 2rem 1rem;
+        }
+
+        .properties-grid {
+          gap: 1rem;
+        }
+
+        .property-content {
+          padding: 1rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="../index.html"
+      style="position: fixed; top: 2rem; left: 2rem; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-weight: 500; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transition: all 0.2s ease; z-index: 1000"
+      onmouseover="this.style.background='#2563eb'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(59, 130, 246, 0.4)';"
+      onmouseout="this.style.background='#3b82f6'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)';"
+      >← Back</a
+    >
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="logo">Garcia Family Properties</div>
+            <div class="tagline">Your home away from home since 2018</div>
+          </div>
+          <nav>
+            <ul>
+              <li><a href="#" onclick="showPage('homepage')" class="active">Home</a></li>
+              <li><a href="#" onclick="showPage('property-details')">Properties</a></li>
+              <li><a href="#" onclick="showPage('booking')">Book Now</a></li>
+              <li><a href="#" onclick="showPage('admin')">Admin</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Homepage -->
+    <div id="homepage" class="page active">
+      <div class="container">
+        <section class="welcome-section">
+          <h1>Welcome to Our Family!</h1>
+          <p>We're Maria and Carlos Garcia, and we've been welcoming guests to our beautiful properties for over 5 years. Each of our homes has been lovingly prepared to make your stay comfortable and memorable.</p>
+          <div class="search-form">
+            <input type="date" placeholder="Check-in" />
+            <input type="date" placeholder="Check-out" />
+            <input type="number" placeholder="Guests" min="1" max="8" />
+            <button type="button">Find Your Perfect Stay</button>
+          </div>
+        </section>
+
+        <section class="properties-section">
+          <h2 style="text-align: center; margin-bottom: 2rem; color: var(--primary-color); font-size: 2rem">Our Cozy Properties</h2>
+          <div class="properties-grid">
+            <div class="property-card">
+              <div class="property-image">Cozy Garden Apartment</div>
+              <div class="property-content">
+                <h3 class="property-name">Cozy Garden Apartment</h3>
+                <p class="property-description">Our favorite little gem! This ground-floor apartment opens right onto our beautiful garden. Perfect for couples or solo travelers who love morning coffee surrounded by flowers.</p>
+                <div class="property-price">$85/night</div>
+                <a href="#" class="btn" onclick="showPage('property-details')">See Our Garden Paradise</a>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Sunny City Studio</div>
+              <div class="property-content">
+                <h3 class="property-name">Sunny City Studio</h3>
+                <p class="property-description">Bright and cheerful studio in the heart of downtown! Carlos renovated this space himself, and we're so proud of the modern amenities while keeping that homey feel.</p>
+                <div class="property-price">$95/night</div>
+                <a href="#" class="btn" onclick="showPage('property-details')">Discover Downtown Comfort</a>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Family Nest Townhouse</div>
+              <div class="property-content">
+                <h3 class="property-name">Family Nest Townhouse</h3>
+                <p class="property-description">This is where we raised our own kids! Now we love sharing this spacious townhouse with traveling families. Three bedrooms, full kitchen, and a playroom for the little ones.</p>
+                <div class="property-price">$150/night</div>
+                <a href="#" class="btn" onclick="showPage('property-details')">Perfect for Families</a>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Rooftop Retreat</div>
+              <div class="property-content">
+                <h3 class="property-name">Rooftop Retreat</h3>
+                <p class="property-description">Our newest addition! This top-floor apartment has the most amazing city views. Maria designed the interior herself, and we think you'll love the sunset views from the private balcony.</p>
+                <div class="property-price">$120/night</div>
+                <a href="#" class="btn" onclick="showPage('property-details')">See the Views</a>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Riverside Cabin</div>
+              <div class="property-content">
+                <h3 class="property-name">Riverside Cabin</h3>
+                <p class="property-description">A bit outside the city, but oh so worth it! This cozy cabin sits right by the river. We love to visit here ourselves on weekends. Bring your fishing gear!</p>
+                <div class="property-price">$110/night</div>
+                <a href="#" class="btn" onclick="showPage('property-details')">Escape to Nature</a>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Artist's Loft</div>
+              <div class="property-content">
+                <h3 class="property-name">Artist's Loft</h3>
+                <p class="property-description">Our daughter Sofia is an artist, and she helped us design this creative space. High ceilings, lots of natural light, and local artwork throughout. Inspiring and peaceful!</p>
+                <div class="property-price">$100/night</div>
+                <a href="#" class="btn" onclick="showPage('property-details')">Unleash Your Creativity</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Property Details Page -->
+    <div id="property-details" class="page">
+      <div class="container">
+        <div class="property-details">
+          <div class="property-main">
+            <div class="property-gallery">
+              <div class="main-image">Cozy Garden Apartment - Main View</div>
+              <div class="thumbnails">
+                <div class="thumbnail">Garden</div>
+                <div class="thumbnail">Kitchen</div>
+                <div class="thumbnail">Bedroom</div>
+                <div class="thumbnail">Bathroom</div>
+              </div>
+            </div>
+
+            <div class="property-info">
+              <h1>Cozy Garden Apartment</h1>
+              <p class="property-address">123 Elm Street, Garden District</p>
+
+              <div class="property-description">
+                <p>Welcome to our absolutely favorite property! This charming ground-floor apartment is where we'd stay ourselves when visiting the city. The French doors open directly onto our lovingly maintained garden, where Maria grows herbs, tomatoes, and the most beautiful roses you've ever seen.</p>
+
+                <p>We've furnished it with pieces collected over the years - the antique writing desk was Carlos's grandmother's, and the cozy reading chair by the window is where I love to sit with my morning coffee. You'll find fresh herbs from our garden in the kitchen, and please feel free to pick some for your cooking!</p>
+
+                <p>The apartment sleeps 2 comfortably with a queen bed that has the fluffiest pillows (we're a bit obsessed with good bedding). The kitchenette has everything you need to prepare simple meals, and we always leave a bottle of local wine and some homemade cookies to welcome you.</p>
+              </div>
+
+              <div class="amenities">
+                <h3>What We Provide</h3>
+                <div class="amenities-list">
+                  <div class="amenity-item">💚 Private garden access</div>
+                  <div class="amenity-item">☕ Fresh herbs for cooking</div>
+                  <div class="amenity-item">🛏️ Premium bedding & linens</div>
+                  <div class="amenity-item">🧴 Eco-friendly toiletries</div>
+                  <div class="amenity-item">📶 High-speed WiFi</div>
+                  <div class="amenity-item">🍷 Welcome wine & cookies</div>
+                  <div class="amenity-item">🚗 Free parking spot</div>
+                  <div class="amenity-item">🔥 Cozy fireplace</div>
+                </div>
+              </div>
+
+              <div class="check-in-info" style="background: var(--warm-white); padding: 1.5rem; border-radius: var(--border-radius); margin: 2rem 0">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem">Easy Check-in</h3>
+                <p>Your keys will be waiting in the blue lockbox by the front door - we'll text you the code the morning of your arrival. Check-in anytime after 3 PM, and please don't hesitate to call Maria at (555) 123-4567 if you need anything at all!</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="booking-sidebar">
+            <h3 style="color: var(--primary-color); margin-bottom: 1.5rem">Reserve Your Stay</h3>
+            <div class="booking-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Check-in</label>
+                  <input type="date" value="2024-03-15" />
+                </div>
+                <div class="form-group">
+                  <label>Check-out</label>
+                  <input type="date" value="2024-03-18" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Guests</label>
+                <select>
+                  <option>1 guest</option>
+                  <option selected>2 guests</option>
+                </select>
+              </div>
+
+              <div class="price-breakdown">
+                <div class="price-line">
+                  <span>$85 × 3 nights</span>
+                  <span>$255</span>
+                </div>
+                <div class="price-line">
+                  <span>Cleaning fee</span>
+                  <span>$25</span>
+                </div>
+                <div class="price-line">
+                  <span>Family discount</span>
+                  <span>-$15</span>
+                </div>
+                <div class="price-line total-price">
+                  <span>Total</span>
+                  <span>$265</span>
+                </div>
+              </div>
+
+              <button class="btn" onclick="showPage('booking')">Book This Sweet Spot</button>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1rem; background: var(--warm-white); border-radius: 8px; text-align: center">
+              <p style="font-size: 0.9rem; color: var(--text-light)">
+                <strong>Questions?</strong><br />
+                Call Maria: (555) 123-4567<br />
+                We're here to help! 😊
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews-section" style="background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-top: 2rem">
+          <h3 style="color: var(--primary-color); margin-bottom: 1.5rem">What Our Guests Say</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem">
+            <div style="padding: 1rem; background: var(--warm-white); border-radius: 8px">
+              <p>"Maria and Carlos are the sweetest hosts! The garden apartment felt like staying at a dear friend's house. Those fresh herbs made our morning eggs unforgettable!" - Sarah & Tom</p>
+            </div>
+            <div style="padding: 1rem; background: var(--warm-white); border-radius: 8px">
+              <p>"Absolutely magical place. We loved having coffee in the garden every morning. The attention to detail and personal touches made this stay so special." - Jennifer M.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Form Page -->
+    <div id="booking" class="page">
+      <div class="container">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem">
+          <div style="background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow)">
+            <h2 style="color: var(--primary-color); margin-bottom: 2rem">Complete Your Reservation</h2>
+
+            <div class="booking-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" placeholder="Your first name" />
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" placeholder="Your last name" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" placeholder="your.email@example.com" />
+                </div>
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" placeholder="(555) 123-4567" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Selected Dates (confirmed)</label>
+                <input type="text" value="March 15 - March 18, 2024" readonly style="background: var(--warm-white)" />
+              </div>
+
+              <div class="form-group">
+                <label>Special Requests or Questions</label>
+                <textarea rows="4" placeholder="Is there anything special we should know about your stay? Allergies, celebration, arrival time, etc. We love to make your visit extra special!"></textarea>
+              </div>
+
+              <div style="background: var(--warm-white); padding: 1.5rem; border-radius: 8px; margin: 2rem 0">
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem">Payment Information</h4>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" />
+                  </div>
+                  <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="text" placeholder="MM/YY" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Cardholder Name</label>
+                    <input type="text" placeholder="Name on card" />
+                  </div>
+                  <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" placeholder="123" />
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn" style="font-size: 1.1rem; padding: 1rem 2rem">Confirm My Reservation</button>
+
+              <p style="font-size: 0.9rem; color: var(--text-light); text-align: center; margin-top: 1rem">By booking, you agree to our house rules and cancellation policy. We'll send you a confirmation email with all the details!</p>
+            </div>
+          </div>
+
+          <div style="background: white; padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow); height: fit-content">
+            <h3 style="color: var(--primary-color); margin-bottom: 1.5rem">Booking Summary</h3>
+
+            <div style="border-bottom: 2px solid var(--secondary-color); padding-bottom: 1rem; margin-bottom: 1rem">
+              <h4>Cozy Garden Apartment</h4>
+              <p style="color: var(--text-light)">123 Elm Street, Garden District</p>
+            </div>
+
+            <div style="margin-bottom: 1.5rem">
+              <div class="price-line"><span>Check-in:</span><span>March 15, 2024</span></div>
+              <div class="price-line"><span>Check-out:</span><span>March 18, 2024</span></div>
+              <div class="price-line"><span>Guests:</span><span>2 adults</span></div>
+              <div class="price-line"><span>Nights:</span><span>3</span></div>
+            </div>
+
+            <div class="price-breakdown">
+              <div class="price-line">
+                <span>$85 × 3 nights</span>
+                <span>$255</span>
+              </div>
+              <div class="price-line">
+                <span>Cleaning fee</span>
+                <span>$25</span>
+              </div>
+              <div class="price-line">
+                <span>Family discount</span>
+                <span>-$15</span>
+              </div>
+              <div class="price-line total-price">
+                <span>Total</span>
+                <span>$265</span>
+              </div>
+            </div>
+
+            <div style="background: var(--warm-white); padding: 1rem; border-radius: 8px; margin-top: 1.5rem">
+              <h4 style="color: var(--primary-color); margin-bottom: 0.5rem">What Happens Next?</h4>
+              <ul style="font-size: 0.9rem; color: var(--text-light); line-height: 1.6">
+                <li>We'll email your confirmation</li>
+                <li>Maria will text you the key code</li>
+                <li>Check-in anytime after 3 PM</li>
+                <li>Call us with any questions!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin" class="page">
+      <div class="container">
+        <h2 style="color: var(--primary-color); margin-bottom: 2rem; font-size: 2rem">Garcia Family Dashboard</h2>
+
+        <div class="dashboard">
+          <div class="admin-sidebar">
+            <h3>Management</h3>
+            <ul class="admin-nav">
+              <li><a href="#" class="active">📅 Calendar Overview</a></li>
+              <li><a href="#">🏠 Properties</a></li>
+              <li><a href="#">📋 Bookings</a></li>
+              <li><a href="#">💰 Revenue</a></li>
+              <li><a href="#">👥 Guests</a></li>
+              <li><a href="#">⭐ Reviews</a></li>
+              <li><a href="#">⚙️ Settings</a></li>
+            </ul>
+          </div>
+
+          <div class="admin-content">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number">42</div>
+                <div class="stat-label">Bookings This Month</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">$8,450</div>
+                <div class="stat-label">Monthly Revenue</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">89%</div>
+                <div class="stat-label">Occupancy Rate</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">4.9</div>
+                <div class="stat-label">Average Rating</div>
+              </div>
+            </div>
+
+            <h3 style="color: var(--primary-color); margin-bottom: 1.5rem">March 2024 Calendar</h3>
+
+            <div class="calendar-grid">
+              <div class="calendar-header">Sun</div>
+              <div class="calendar-header">Mon</div>
+              <div class="calendar-header">Tue</div>
+              <div class="calendar-header">Wed</div>
+              <div class="calendar-header">Thu</div>
+              <div class="calendar-header">Fri</div>
+              <div class="calendar-header">Sat</div>
+
+              <!-- Week 1 -->
+              <div class="calendar-day"><span style="font-weight: bold">1</span></div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">2</span>
+                <div class="booking-dot"></div>
+                <small>Garden Apt</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">3</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>2 properties</small>
+              </div>
+              <div class="calendar-day available">
+                <span style="font-weight: bold">4</span>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">5</span>
+                <div class="booking-dot"></div>
+                <small>Rooftop</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">6</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>3 properties</small>
+              </div>
+              <div class="calendar-day available">
+                <span style="font-weight: bold">7</span>
+              </div>
+
+              <!-- Week 2 -->
+              <div class="calendar-day available">
+                <span style="font-weight: bold">8</span>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">9</span>
+                <div class="booking-dot"></div>
+                <small>Family House</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">10</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>2 properties</small>
+              </div>
+              <div class="calendar-day available">
+                <span style="font-weight: bold">11</span>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">12</span>
+                <div class="booking-dot"></div>
+                <small>Studio</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">13</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>Weekend rush</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">14</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>2 properties</small>
+              </div>
+
+              <!-- Week 3 -->
+              <div class="calendar-day booked" style="background: #fff3cd">
+                <span style="font-weight: bold">15</span>
+                <div class="booking-dot"></div>
+                <small>New booking!</small>
+              </div>
+              <div class="calendar-day booked" style="background: #fff3cd">
+                <span style="font-weight: bold">16</span>
+                <div class="booking-dot"></div>
+                <small>Garden Apt</small>
+              </div>
+              <div class="calendar-day booked" style="background: #fff3cd">
+                <span style="font-weight: bold">17</span>
+                <div class="booking-dot"></div>
+                <small>Garden Apt</small>
+              </div>
+              <div class="calendar-day available">
+                <span style="font-weight: bold">18</span>
+              </div>
+              <div class="calendar-day available">
+                <span style="font-weight: bold">19</span>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">20</span>
+                <div class="booking-dot"></div>
+                <small>Cabin</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">21</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>2 properties</small>
+              </div>
+
+              <!-- Week 4 -->
+              <div class="calendar-day available">
+                <span style="font-weight: bold">22</span>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">23</span>
+                <div class="booking-dot"></div>
+                <small>Loft</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">24</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>2 properties</small>
+              </div>
+              <div class="calendar-day available">
+                <span style="font-weight: bold">25</span>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">26</span>
+                <div class="booking-dot"></div>
+                <small>Studio</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">27</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>Full house!</small>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">28</span>
+                <div class="booking-dot"></div>
+                <div class="booking-dot"></div>
+                <small>2 properties</small>
+              </div>
+
+              <!-- Week 5 -->
+              <div class="calendar-day available">
+                <span style="font-weight: bold">29</span>
+              </div>
+              <div class="calendar-day available">
+                <span style="font-weight: bold">30</span>
+              </div>
+              <div class="calendar-day booked">
+                <span style="font-weight: bold">31</span>
+                <div class="booking-dot"></div>
+                <small>Month end</small>
+              </div>
+              <div class="calendar-day" style="background: #f5f5f5"></div>
+              <div class="calendar-day" style="background: #f5f5f5"></div>
+              <div class="calendar-day" style="background: #f5f5f5"></div>
+              <div class="calendar-day" style="background: #f5f5f5"></div>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1rem; background: var(--warm-white); border-radius: 8px">
+              <h4 style="color: var(--primary-color)">Quick Notes</h4>
+              <ul style="color: var(--text-light); margin-top: 0.5rem">
+                <li>🌟 March 15-17: New guests in Garden Apartment (Sarah & Tom)</li>
+                <li>🧹 Cleaning scheduled for March 18th</li>
+                <li>🔧 Rooftop balcony furniture delivery pending</li>
+                <li>📝 Follow up on Jennifer's review request</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Garcia Family Properties</h4>
+            <p>We're Maria and Carlos Garcia, your local hosts who truly care about making your stay memorable. We've been welcoming guests to our beautiful properties since 2018.</p>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Contact</h4>
+            <p>
+              📞 Maria: (555) 123-4567<br />
+              📧 hello@garciaproperties.com<br />
+              🏠 Based in the Garden District<br />
+              Available 7am-9pm daily
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4>Our Promise</h4>
+            <p>Every property is personally maintained by our family. We provide 24/7 support during your stay and always go the extra mile to make you feel at home.</p>
+          </div>
+        </div>
+        <div style="border-top: 1px solid var(--accent-color); padding-top: 1rem; text-align: center">
+          <p>&copy; 2024 Garcia Family Properties. Made with ❤️ for our guests.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll(".page");
+        pages.forEach((page) => page.classList.remove("active"));
+
+        // Show selected page
+        document.getElementById(pageId).classList.add("active");
+
+        // Update navigation
+        const navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach((link) => link.classList.remove("active"));
+        event.target.classList.add("active");
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }
+    </script>
+  </body>
+</html>

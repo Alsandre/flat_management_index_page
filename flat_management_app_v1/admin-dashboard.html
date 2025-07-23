@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - PropertyStay</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #fafafa;
+      }
+
+      /* Dashboard Layout */
+      .dashboard-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Header */
+      .dashboard-header {
+        background: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2563eb;
+      }
+
+      .admin-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .admin-avatar {
+        width: 40px;
+        height: 40px;
+        background: #2563eb;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+      }
+
+      .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+      }
+
+      /* Sidebar Navigation */
+      .sidebar {
+        background: white;
+        width: 250px;
+        height: calc(100vh - 80px);
+        position: fixed;
+        left: -250px;
+        top: 80px;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 99;
+      }
+
+      .sidebar.open {
+        left: 0;
+      }
+
+      .sidebar-nav {
+        padding: 2rem 0;
+      }
+
+      .nav-item {
+        display: block;
+        padding: 1rem 2rem;
+        color: #666;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+        border-left: 3px solid transparent;
+      }
+
+      .nav-item:hover,
+      .nav-item.active {
+        background: #f0f7ff;
+        color: #2563eb;
+        border-left-color: #2563eb;
+      }
+
+      .nav-item i {
+        margin-right: 0.75rem;
+        width: 20px;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 1rem;
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+        overflow-x: hidden;
+      }
+
+      /* Quick Stats */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .stat-change {
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+      }
+
+      .stat-change.positive {
+        color: #10b981;
+      }
+
+      .stat-change.negative {
+        color: #ef4444;
+      }
+
+      /* Calendar Section */
+      .calendar-section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .calendar-header {
+        padding: 1rem;
+        background: #f8fafc;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .calendar-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .calendar-nav {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .nav-btn {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .nav-btn:hover {
+        background: #1d4ed8;
+      }
+
+      .current-month {
+        font-weight: 600;
+        color: #333;
+        font-size: 0.9rem;
+      }
+
+      /* Calendar Grid */
+      .calendar-content {
+        padding: 1rem;
+        overflow-x: auto;
+      }
+
+      .legend {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 4px;
+      }
+
+      .legend-color.available {
+        background: #10b981;
+      }
+
+      .legend-color.booked {
+        background: #ef4444;
+      }
+
+      .legend-color.blocked {
+        background: #f59e0b;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 1px;
+        background: #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+        min-width: 280px;
+      }
+
+      .calendar-day {
+        background: white;
+        min-height: 60px;
+        padding: 0.25rem;
+        position: relative;
+      }
+
+      .calendar-day.header {
+        background: #f8fafc;
+        min-height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .day-number {
+        font-weight: 600;
+        margin-bottom: 0.125rem;
+        font-size: 0.8rem;
+      }
+
+      .day-bookings {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+
+      .booking-item {
+        font-size: 0.5rem;
+        padding: 1px 2px;
+        border-radius: 2px;
+        color: white;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .booking-item.available {
+        background: #10b981;
+      }
+
+      .booking-item.booked {
+        background: #ef4444;
+      }
+
+      .booking-item.blocked {
+        background: #f59e0b;
+      }
+
+      /* Property Status */
+      .property-status {
+        margin-top: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+      }
+
+      .property-status h3 {
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      .property-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .property-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        border-left: 4px solid #e5e7eb;
+      }
+
+      .property-item.available {
+        border-left-color: #10b981;
+      }
+
+      .property-item.booked {
+        border-left-color: #ef4444;
+      }
+
+      .property-item.blocked {
+        border-left-color: #f59e0b;
+      }
+
+      .property-name {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .property-status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: white;
+      }
+
+      .property-status-badge.available {
+        background: #10b981;
+      }
+
+      .property-status-badge.booked {
+        background: #ef4444;
+      }
+
+      .property-status-badge.blocked {
+        background: #f59e0b;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 480px) {
+        .dashboard-header {
+          padding: 0.75rem;
+        }
+
+        .logo {
+          font-size: 1.2rem;
+        }
+
+        .admin-info span {
+          display: none;
+        }
+
+        .main-content {
+          padding: 0.5rem;
+        }
+
+        .stats-grid {
+          gap: 1rem;
+        }
+
+        .stat-card {
+          padding: 1rem;
+        }
+
+        .stat-value {
+          font-size: 1.5rem;
+        }
+
+        .calendar-header {
+          flex-direction: column;
+          align-items: stretch;
+          text-align: center;
+        }
+
+        .calendar-title {
+          font-size: 1rem;
+        }
+
+        .calendar-nav {
+          justify-content: center;
+        }
+
+        .nav-btn {
+          padding: 0.3rem 0.6rem;
+          font-size: 0.8rem;
+        }
+
+        .current-month {
+          font-size: 0.8rem;
+        }
+
+        .calendar-day {
+          min-height: 50px;
+          padding: 0.125rem;
+        }
+
+        .calendar-day.header {
+          min-height: 25px;
+          font-size: 0.7rem;
+        }
+
+        .day-number {
+          font-size: 0.7rem;
+          margin-bottom: 0.05rem;
+        }
+
+        .booking-item {
+          font-size: 0.4rem;
+          padding: 0.5px 1px;
+        }
+
+        .property-status {
+          margin-top: 1rem;
+          padding: 1rem;
+        }
+
+        .property-item {
+          padding: 0.75rem;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .menu-toggle {
+          display: none;
+        }
+
+        .sidebar {
+          position: relative;
+          left: 0;
+          top: 0;
+          height: calc(100vh - 80px);
+        }
+
+        .dashboard-layout {
+          grid-template-columns: 250px 1fr;
+        }
+
+        .main-content {
+          margin-left: 0;
+          padding: 2rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .property-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .calendar-content {
+          padding: 1.5rem;
+        }
+
+        .calendar-day {
+          min-height: 100px;
+          padding: 0.5rem;
+        }
+
+        .calendar-day.header {
+          min-height: 40px;
+          font-size: 1rem;
+        }
+
+        .day-number {
+          font-size: 1rem;
+          margin-bottom: 0.25rem;
+        }
+
+        .booking-item {
+          font-size: 0.7rem;
+          padding: 2px 4px;
+        }
+
+        .legend {
+          gap: 2rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .legend-item {
+          font-size: 0.9rem;
+        }
+
+        .legend-color {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .property-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .legend {
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-item active"> <i>📅</i> Calendar View </a>
+          <a href="#" class="nav-item"> <i>🏠</i> Properties </a>
+          <a href="#" class="nav-item"> <i>📋</i> Bookings </a>
+          <a href="#" class="nav-item"> <i>👥</i> Guests </a>
+          <a href="#" class="nav-item"> <i>💰</i> Revenue </a>
+          <a href="#" class="nav-item"> <i>📊</i> Analytics </a>
+          <a href="#" class="nav-item"> <i>⚙️</i> Settings </a>
+          <a href="index.html" class="nav-item"> <i>🌐</i> View Site </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main>
+        <!-- Header -->
+        <header class="dashboard-header">
+          <div style="display: flex; align-items: center; gap: 1rem">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="logo">PropertyStay Admin</div>
+          </div>
+          <div class="admin-info">
+            <span>Welcome, Admin</span>
+            <div class="admin-avatar">A</div>
+          </div>
+        </header>
+
+        <div class="main-content">
+          <!-- Quick Stats -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value">24</div>
+              <div class="stat-label">Total Bookings</div>
+              <div class="stat-change positive">+12% this month</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">$8,420</div>
+              <div class="stat-label">Revenue</div>
+              <div class="stat-change positive">+8% this month</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">78%</div>
+              <div class="stat-label">Occupancy Rate</div>
+              <div class="stat-change negative">-3% this month</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">4.8</div>
+              <div class="stat-label">Avg Rating</div>
+              <div class="stat-change positive">+0.2 this month</div>
+            </div>
+          </div>
+
+          <!-- Calendar Section -->
+          <section class="calendar-section">
+            <div class="calendar-header">
+              <h2 class="calendar-title">Booking Calendar</h2>
+              <div class="calendar-nav">
+                <button class="nav-btn">← Prev</button>
+                <span class="current-month">March 2024</span>
+                <button class="nav-btn">Next →</button>
+              </div>
+            </div>
+
+            <div class="calendar-content">
+              <div class="legend">
+                <div class="legend-item">
+                  <div class="legend-color available"></div>
+                  <span>Available</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color booked"></div>
+                  <span>Booked</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color blocked"></div>
+                  <span>Blocked</span>
+                </div>
+              </div>
+
+              <div class="calendar-grid">
+                <!-- Calendar Headers -->
+                <div class="calendar-day header">Sun</div>
+                <div class="calendar-day header">Mon</div>
+                <div class="calendar-day header">Tue</div>
+                <div class="calendar-day header">Wed</div>
+                <div class="calendar-day header">Thu</div>
+                <div class="calendar-day header">Fri</div>
+                <div class="calendar-day header">Sat</div>
+
+                <!-- Calendar Days -->
+                <div class="calendar-day">
+                  <div class="day-number">1</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Downtown Apt</div>
+                    <div class="booking-item available">Garden Studio</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">2</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Downtown Apt</div>
+                    <div class="booking-item booked">Luxury Loft</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">3</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Downtown Apt</div>
+                    <div class="booking-item booked">Seaside Cottage</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">4</div>
+                  <div class="day-bookings">
+                    <div class="booking-item blocked">Mountain Cabin</div>
+                    <div class="booking-item booked">City Penthouse</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">5</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Garden Studio</div>
+                    <div class="booking-item booked">Luxury Loft</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">6</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Downtown Apt</div>
+                    <div class="booking-item available">Seaside Cottage</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">7</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Mountain Cabin</div>
+                    <div class="booking-item booked">City Penthouse</div>
+                  </div>
+                </div>
+
+                <!-- Continue pattern for rest of month -->
+                <div class="calendar-day">
+                  <div class="day-number">8</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Garden Studio</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">9</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Downtown Apt</div>
+                    <div class="booking-item booked">Luxury Loft</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">10</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Seaside Cottage</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">11</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Mountain Cabin</div>
+                    <div class="booking-item blocked">City Penthouse</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">12</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Downtown Apt</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">13</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Garden Studio</div>
+                    <div class="booking-item booked">Luxury Loft</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">14</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Seaside Cottage</div>
+                  </div>
+                </div>
+
+                <!-- More days... (15-31) -->
+                <div class="calendar-day">
+                  <div class="day-number">15</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Downtown Apt</div>
+                    <div class="booking-item available">Mountain Cabin</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">16</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Downtown Apt</div>
+                    <div class="booking-item booked">City Penthouse</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">17</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Downtown Apt</div>
+                    <div class="booking-item available">Garden Studio</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">18</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Luxury Loft</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">19</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Seaside Cottage</div>
+                    <div class="booking-item available">Mountain Cabin</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">20</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Downtown Apt</div>
+                    <div class="booking-item booked">City Penthouse</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">21</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Garden Studio</div>
+                  </div>
+                </div>
+
+                <!-- Continue with remaining days... -->
+                <div class="calendar-day">
+                  <div class="day-number">22</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Luxury Loft</div>
+                    <div class="booking-item blocked">Seaside Cottage</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">23</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Mountain Cabin</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">24</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Downtown Apt</div>
+                    <div class="booking-item booked">City Penthouse</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">25</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Garden Studio</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">26</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Luxury Loft</div>
+                    <div class="booking-item booked">Seaside Cottage</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">27</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Mountain Cabin</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">28</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Downtown Apt</div>
+                    <div class="booking-item available">City Penthouse</div>
+                  </div>
+                </div>
+
+                <div class="calendar-day">
+                  <div class="day-number">29</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Garden Studio</div>
+                    <div class="booking-item booked">Luxury Loft</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">30</div>
+                  <div class="day-bookings">
+                    <div class="booking-item booked">Seaside Cottage</div>
+                  </div>
+                </div>
+                <div class="calendar-day">
+                  <div class="day-number">31</div>
+                  <div class="day-bookings">
+                    <div class="booking-item available">Mountain Cabin</div>
+                    <div class="booking-item available">City Penthouse</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Property Status -->
+          <section class="property-status">
+            <h3>Property Status Overview</h3>
+            <div class="property-grid">
+              <div class="property-item available">
+                <span class="property-name">Downtown Apartment</span>
+                <span class="property-status-badge available">Available</span>
+              </div>
+              <div class="property-item booked">
+                <span class="property-name">Garden Studio</span>
+                <span class="property-status-badge booked">Booked</span>
+              </div>
+              <div class="property-item booked">
+                <span class="property-name">Luxury Loft</span>
+                <span class="property-status-badge booked">Booked</span>
+              </div>
+              <div class="property-item available">
+                <span class="property-name">Seaside Cottage</span>
+                <span class="property-status-badge available">Available</span>
+              </div>
+              <div class="property-item blocked">
+                <span class="property-name">Mountain Cabin</span>
+                <span class="property-status-badge blocked">Maintenance</span>
+              </div>
+              <div class="property-item booked">
+                <span class="property-name">City Penthouse</span>
+                <span class="property-status-badge booked">Booked</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

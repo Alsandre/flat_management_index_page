@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StayEasy - Rental Property Management</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+      }
+
+      /* Page Management */
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      /* Header */
+      .header {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #2563eb;
+      }
+
+      .hamburger {
+        display: block;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s;
+        min-height: 44px;
+      }
+
+      .btn-primary {
+        background: #2563eb;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #1d4ed8;
+      }
+
+      .btn-secondary {
+        background: #f3f4f6;
+        color: #374151;
+      }
+
+      .btn-secondary:hover {
+        background: #e5e7eb;
+      }
+
+      /* Forms */
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 1rem;
+        min-height: 44px;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      /* Cards */
+      .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        padding: 3rem 0;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+      }
+
+      /* Search Section */
+      .search-section {
+        background: white;
+        padding: 2rem 0;
+      }
+
+      .search-form {
+        display: grid;
+        gap: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Property Grid */
+      .properties-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .property-card {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .property-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(45deg, #e5e7eb, #f3f4f6);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin-bottom: 1rem;
+      }
+
+      .property-info {
+        padding: 1rem;
+        flex: 1;
+      }
+
+      .property-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .property-description {
+        color: #6b7280;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .property-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 1rem;
+      }
+
+      .property-price span {
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: #6b7280;
+      }
+
+      /* Property Details */
+      .property-details {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .gallery {
+        grid-area: gallery;
+      }
+
+      .main-image {
+        width: 100%;
+        height: 300px;
+        background: linear-gradient(45deg, #e5e7eb, #f3f4f6);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      .thumbnail-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+      }
+
+      .thumbnail {
+        aspect-ratio: 1;
+        background: linear-gradient(45deg, #e5e7eb, #f3f4f6);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      .info-section {
+        grid-area: info;
+      }
+
+      .booking-section {
+        grid-area: booking;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        height: fit-content;
+      }
+
+      .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+
+      .amenity-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+
+      .info-box {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+
+      .price-breakdown {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 1rem;
+        margin-top: 1rem;
+      }
+
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .price-total {
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 0.5rem;
+      }
+
+      /* Booking Form */
+      .booking-form-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .booking-summary {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+      }
+
+      .summary-image {
+        width: 80px;
+        height: 60px;
+        background: linear-gradient(45deg, #e5e7eb, #f3f4f6);
+        border-radius: 8px;
+        flex-shrink: 0;
+      }
+
+      /* Admin Dashboard */
+      .admin-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: calc(100vh - 80px);
+      }
+
+      .admin-sidebar {
+        background: white;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .sidebar-menu {
+        list-style: none;
+      }
+
+      .sidebar-menu li {
+        margin-bottom: 0.5rem;
+      }
+
+      .sidebar-menu a {
+        display: block;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+        color: #374151;
+        border-radius: 8px;
+        transition: background 0.3s;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background: #f3f4f6;
+        color: #2563eb;
+      }
+
+      .admin-main {
+        padding: 2rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2563eb;
+      }
+
+      .stat-label {
+        color: #6b7280;
+        font-size: 0.9rem;
+      }
+
+      .calendar-section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+
+      .calendar-header {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: between;
+        align-items: center;
+      }
+
+      .calendar-grid {
+        overflow-x: auto;
+      }
+
+      .calendar-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+      }
+
+      .calendar-table th,
+      .calendar-table td {
+        padding: 0.5rem;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+        min-width: 40px;
+      }
+
+      .calendar-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        font-size: 0.8rem;
+      }
+
+      .property-name {
+        text-align: left;
+        font-weight: 600;
+        background: #f8f9fa;
+        min-width: 150px;
+      }
+
+      .day-available {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .day-booked {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .day-blocked {
+        background: #fed7aa;
+        color: #c2410c;
+      }
+
+      .legend {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        font-size: 0.9rem;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 2px;
+      }
+
+      /* Footer */
+      .footer {
+        background: #374151;
+        color: white;
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (min-width: 768px) {
+        .nav-links {
+          display: flex;
+        }
+
+        .hamburger {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: 3rem;
+        }
+
+        .search-form {
+          grid-template-columns: repeat(4, 1fr);
+          align-items: end;
+        }
+
+        .properties-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .property-details {
+          grid-template-columns: 2fr 1fr;
+          grid-template-areas:
+            "gallery booking"
+            "info booking";
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .admin-layout {
+          grid-template-columns: 250px 1fr;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .properties-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      /* Navigation styles */
+      .nav-btn {
+        background: none;
+        border: none;
+        color: #2563eb;
+        cursor: pointer;
+        text-decoration: underline;
+        margin: 0 0.5rem;
+        padding: 0.5rem;
+      }
+
+      .nav-btn:hover {
+        color: #1d4ed8;
+      }
+
+      /* Hidden class for page management */
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="../index.html"
+      style="position: fixed; top: 2rem; left: 2rem; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-weight: 500; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transition: all 0.2s ease; z-index: 1000"
+      onmouseover="this.style.background='#2563eb'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(59, 130, 246, 0.4)';"
+      onmouseout="this.style.background='#3b82f6'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)';"
+      >← Back</a
+    >
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav-container">
+        <a href="#" class="logo" onclick="showPage('homepage')">StayEasy</a>
+        <div class="nav-links">
+          <a href="#" onclick="showPage('homepage')">Properties</a>
+          <a href="#" onclick="showPage('admin')">Admin</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="hamburger">☰</div>
+      </nav>
+    </header>
+
+    <!-- Page 1: Property Listing Homepage -->
+    <div id="homepage" class="page active">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="container">
+          <h1>Find your perfect stay</h1>
+          <p>Discover comfortable, affordable rental properties in the heart of the city</p>
+        </div>
+      </section>
+
+      <!-- Search Section -->
+      <section class="search-section">
+        <div class="container">
+          <form class="search-form">
+            <div class="form-group">
+              <label class="form-label">Check-in</label>
+              <input type="date" class="form-input" value="2024-03-15" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Check-out</label>
+              <input type="date" class="form-input" value="2024-03-18" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Guests</label>
+              <select class="form-input">
+                <option>1 Guest</option>
+                <option>2 Guests</option>
+                <option>3 Guests</option>
+                <option>4 Guests</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">&nbsp;</label>
+              <button type="button" class="btn btn-primary" style="width: 100%">Search Properties</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Properties Grid -->
+      <section class="container">
+        <div class="properties-grid">
+          <div class="card property-card">
+            <div class="property-image">📷 Property Image</div>
+            <div class="property-info">
+              <h3 class="property-title">Central Studio</h3>
+              <p class="property-description">Modern studio in the heart of downtown. Perfect for business travelers and couples. Walking distance to restaurants and attractions.</p>
+              <div class="property-price">$85 <span>/night</span></div>
+              <button class="btn btn-primary" style="width: 100%" onclick="showPage('property-details')">View Details</button>
+            </div>
+          </div>
+
+          <div class="card property-card">
+            <div class="property-image">📷 Property Image</div>
+            <div class="property-info">
+              <h3 class="property-title">Garden View Apartment</h3>
+              <p class="property-description">Spacious 1-bedroom with beautiful garden views. Quiet neighborhood, fully equipped kitchen, perfect for longer stays.</p>
+              <div class="property-price">$95 <span>/night</span></div>
+              <button class="btn btn-primary" style="width: 100%" onclick="showPage('property-details')">View Details</button>
+            </div>
+          </div>
+
+          <div class="card property-card">
+            <div class="property-image">📷 Property Image</div>
+            <div class="property-info">
+              <h3 class="property-title">City Loft</h3>
+              <p class="property-description">Industrial-style loft with exposed brick and high ceilings. Great for creative professionals and small groups.</p>
+              <div class="property-price">$120 <span>/night</span></div>
+              <button class="btn btn-primary" style="width: 100%" onclick="showPage('property-details')">View Details</button>
+            </div>
+          </div>
+
+          <div class="card property-card">
+            <div class="property-image">📷 Property Image</div>
+            <div class="property-info">
+              <h3 class="property-title">Riverside Retreat</h3>
+              <p class="property-description">Peaceful 2-bedroom home by the river. Private deck, full kitchen, ideal for families and longer stays.</p>
+              <div class="property-price">$140 <span>/night</span></div>
+              <button class="btn btn-primary" style="width: 100%" onclick="showPage('property-details')">View Details</button>
+            </div>
+          </div>
+
+          <div class="card property-card">
+            <div class="property-image">📷 Property Image</div>
+            <div class="property-info">
+              <h3 class="property-title">Historic Charm</h3>
+              <p class="property-description">Beautifully restored historic home with modern amenities. Character details throughout, in charming neighborhood.</p>
+              <div class="property-price">$110 <span>/night</span></div>
+              <button class="btn btn-primary" style="width: 100%" onclick="showPage('property-details')">View Details</button>
+            </div>
+          </div>
+
+          <div class="card property-card">
+            <div class="property-image">📷 Property Image</div>
+            <div class="property-info">
+              <h3 class="property-title">Modern Minimalist</h3>
+              <p class="property-description">Clean, contemporary design with all modern conveniences. Recently renovated, perfect for digital nomads.</p>
+              <div class="property-price">$100 <span>/night</span></div>
+              <button class="btn btn-primary" style="width: 100%" onclick="showPage('property-details')">View Details</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Page 2: Property Details -->
+    <div id="property-details" class="page">
+      <div class="container">
+        <button class="nav-btn" onclick="showPage('homepage')">← Back to Properties</button>
+
+        <div class="property-details">
+          <div class="gallery">
+            <div class="main-image">📷 Main Property Image (800x400)</div>
+            <div class="thumbnail-row">
+              <div class="thumbnail">📷 1</div>
+              <div class="thumbnail">📷 2</div>
+              <div class="thumbnail">📷 3</div>
+              <div class="thumbnail">📷 4</div>
+            </div>
+          </div>
+
+          <div class="booking-section">
+            <div class="property-price" style="margin-bottom: 1rem">$85 <span>/night</span></div>
+
+            <form>
+              <div class="form-group">
+                <label class="form-label">Check-in</label>
+                <input type="date" class="form-input" value="2024-03-15" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Check-out</label>
+                <input type="date" class="form-input" value="2024-03-18" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Guests</label>
+                <select class="form-input">
+                  <option>2 Guests</option>
+                  <option>1 Guest</option>
+                  <option>3 Guests</option>
+                  <option>4 Guests</option>
+                </select>
+              </div>
+            </form>
+
+            <div class="price-breakdown">
+              <div class="price-row">
+                <span>$85 × 3 nights</span>
+                <span>$255</span>
+              </div>
+              <div class="price-row">
+                <span>Cleaning fee</span>
+                <span>$25</span>
+              </div>
+              <div class="price-row">
+                <span>Service fee</span>
+                <span>$15</span>
+              </div>
+              <div class="price-row price-total">
+                <span>Total</span>
+                <span>$295</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem" onclick="showPage('booking-form')">Request Booking</button>
+          </div>
+
+          <div class="info-section">
+            <h1>Central Studio</h1>
+            <p style="color: #6b7280; margin-bottom: 1rem">📍 123 Main Street, Downtown District</p>
+
+            <p>Experience the heart of the city in this beautifully designed studio apartment. Located in a vibrant downtown neighborhood, you'll be steps away from the best restaurants, shops, and entertainment venues.</p>
+
+            <p>This modern space features a comfortable queen bed, full kitchenette, and a stylish bathroom. The large windows provide plenty of natural light and city views. Perfect for solo travelers, couples, or business trips.</p>
+
+            <h3 style="margin: 2rem 0 1rem 0">Amenities</h3>
+            <div class="amenities-grid">
+              <div class="amenity-item">📶 Free WiFi</div>
+              <div class="amenity-item">🏠 Full Kitchen</div>
+              <div class="amenity-item">📺 Smart TV</div>
+              <div class="amenity-item">❄️ Air Conditioning</div>
+              <div class="amenity-item">🚿 Private Bathroom</div>
+              <div class="amenity-item">🛏️ Queen Bed</div>
+              <div class="amenity-item">🧺 Washer/Dryer</div>
+              <div class="amenity-item">🅿️ Street Parking</div>
+            </div>
+
+            <div class="info-box">
+              <h4>Check-in Instructions</h4>
+              <p>Keys are located in the blue lockbox by the main entrance. The code will be sent to you 2 hours before your arrival. Check-in is available 24/7.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 3: Booking Request Form -->
+    <div id="booking-form" class="page">
+      <div class="container">
+        <button class="nav-btn" onclick="showPage('property-details')">← Back to Property</button>
+
+        <div class="booking-form-container">
+          <h2 style="margin-bottom: 2rem">Request Booking</h2>
+
+          <div class="booking-summary">
+            <div class="summary-image"></div>
+            <div>
+              <h4>Central Studio</h4>
+              <p>Mar 15 - Mar 18, 2024</p>
+              <p>2 Guests • 3 nights</p>
+              <p style="font-weight: 600; color: #2563eb">Total: $295</p>
+            </div>
+          </div>
+
+          <form>
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-input" placeholder="Enter your full name" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" placeholder="your.email@example.com" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" placeholder="+1 (555) 123-4567" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Check-in Date</label>
+              <input type="date" class="form-input" value="2024-03-15" readonly style="background: #f9f9f9" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Check-out Date</label>
+              <input type="date" class="form-input" value="2024-03-18" readonly style="background: #f9f9f9" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Special Requests (Optional)</label>
+              <textarea class="form-input" rows="4" placeholder="Any special requests or questions about your stay?"></textarea>
+            </div>
+
+            <div class="info-box">
+              <p><strong>📞 Quick Response:</strong> We'll confirm availability and respond to your booking request within 2 hours during business hours.</p>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem">Send Booking Request</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 4: Admin Dashboard -->
+    <div id="admin" class="page">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <ul class="sidebar-menu">
+            <li><a href="#" class="active">📊 Dashboard</a></li>
+            <li><a href="#">📅 Calendar</a></li>
+            <li><a href="#">🏠 Properties</a></li>
+            <li><a href="#">📋 Bookings</a></li>
+            <li><a href="#">⚙️ Settings</a></li>
+          </ul>
+        </aside>
+
+        <main class="admin-main">
+          <h1 style="margin-bottom: 2rem">Dashboard Overview</h1>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number">18</div>
+              <div class="stat-label">Bookings This Month</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">$4,250</div>
+              <div class="stat-label">Monthly Revenue</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">78%</div>
+              <div class="stat-label">Occupancy Rate</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">4</div>
+              <div class="stat-label">Available Properties</div>
+            </div>
+          </div>
+
+          <div class="calendar-section">
+            <div class="calendar-header">
+              <h3>March 2024 - Property Availability</h3>
+            </div>
+
+            <div class="calendar-grid">
+              <table class="calendar-table">
+                <thead>
+                  <tr>
+                    <th class="property-name">Property</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>10</th>
+                    <th>11</th>
+                    <th>12</th>
+                    <th>13</th>
+                    <th>14</th>
+                    <th>15</th>
+                    <th>16</th>
+                    <th>17</th>
+                    <th>18</th>
+                    <th>19</th>
+                    <th>20</th>
+                    <th>21</th>
+                    <th>22</th>
+                    <th>23</th>
+                    <th>24</th>
+                    <th>25</th>
+                    <th>26</th>
+                    <th>27</th>
+                    <th>28</th>
+                    <th>29</th>
+                    <th>30</th>
+                    <th>31</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="property-name">Central Studio</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-blocked">×</td>
+                    <td class="day-blocked">×</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                  </tr>
+                  <tr>
+                    <td class="property-name">Garden View Apt</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                  </tr>
+                  <tr>
+                    <td class="property-name">City Loft</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                  </tr>
+                  <tr>
+                    <td class="property-name">Riverside Retreat</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                  </tr>
+                  <tr>
+                    <td class="property-name">Historic Charm</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                  </tr>
+                  <tr>
+                    <td class="property-name">Modern Minimalist</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-booked">●</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-available">✓</td>
+                    <td class="day-blocked">×</td>
+                    <td class="day-blocked">×</td>
+                    <td class="day-blocked">×</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="legend">
+              <div class="legend-item">
+                <div class="legend-color day-available"></div>
+                <span>Available</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color day-booked"></div>
+                <span>Booked</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color day-blocked"></div>
+                <span>Blocked/Maintenance</span>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2024 StayEasy Property Management. All rights reserved.</p>
+        <p>📧 hello@stayeasy.com | 📞 (555) 123-4567</p>
+      </div>
+    </footer>
+
+    <script>
+      function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll(".page");
+        pages.forEach((page) => {
+          page.classList.remove("active");
+        });
+
+        // Show selected page
+        document.getElementById(pageId).classList.add("active");
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }
+    </script>
+  </body>
+</html>

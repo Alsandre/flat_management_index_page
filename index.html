@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flat Management App - Version Navigator</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8fafc;
+        color: #334155;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        flex: 1;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 4rem;
+        padding: 3rem 0;
+      }
+
+      .title {
+        font-size: 3.5rem;
+        font-weight: 300;
+        color: #1e293b;
+        margin-bottom: 1rem;
+        letter-spacing: -0.02em;
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+        color: #64748b;
+        font-weight: 400;
+      }
+
+      /* Quick Stats */
+      .stats-bar {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+
+      .stat {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .stat-value {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 500;
+      }
+
+      /* Version Grid */
+      .versions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .version-card {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 2.5rem;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+        position: relative;
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .version-card:hover {
+        border-color: #3b82f6;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15);
+        background: #fafbff;
+      }
+
+      .version-card:active {
+        transform: translateY(-2px);
+      }
+
+      .version-number {
+        font-size: 1rem;
+        color: #64748b;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .version-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0;
+        transition: color 0.3s ease;
+      }
+
+      .version-card:hover .version-title {
+        color: #3b82f6;
+      }
+
+      .version-status {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+      }
+
+      .version-status.draft {
+        background: #f59e0b;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+      }
+
+      .version-status.archived {
+        background: #6b7280;
+        box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.2);
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 3rem 0;
+        color: #64748b;
+        font-size: 1rem;
+        border-top: 1px solid #e2e8f0;
+        margin-top: auto;
+      }
+
+      /* Responsive for smaller screens */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1.5rem 1rem;
+        }
+
+        .title {
+          font-size: 2.5rem;
+        }
+
+        .subtitle {
+          font-size: 1.1rem;
+        }
+
+        .versions-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .version-card {
+          padding: 2rem;
+          min-height: 140px;
+        }
+
+        .version-title {
+          font-size: 1.5rem;
+        }
+
+        .stats-bar {
+          padding: 1.5rem;
+        }
+
+        .stat-value {
+          font-size: 2rem;
+        }
+      }
+
+      /* Larger desktop screens */
+      @media (min-width: 1400px) {
+        .container {
+          max-width: 1400px;
+          padding: 3rem 2rem;
+        }
+
+        .versions-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 2.5rem;
+        }
+
+        .version-card {
+          min-height: 200px;
+          padding: 3rem;
+        }
+
+        .version-title {
+          font-size: 2.2rem;
+        }
+      }
+
+      /* Focus states for accessibility */
+      .version-card:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      }
+
+      /* Hover animation for the entire card */
+      .version-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #3b82f6, #10b981);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+      }
+
+      .version-card:hover::before {
+        opacity: 0.05;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <h1 class="title">Flat Management App</h1>
+        <p class="subtitle">Version Navigator & Development Dashboard</p>
+      </header>
+
+      <!-- Quick Stats -->
+      <div class="stats-bar">
+        <div class="stat">
+          <div class="stat-value">11</div>
+          <div class="stat-label">Versions</div>
+        </div>
+      </div>
+
+      <!-- Versions Grid -->
+      <main class="versions-grid">
+        <!-- Version 1 -->
+        <a href="flat_management_app_v1/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 1.0</div>
+          <h2 class="version-title">Version 1</h2>
+        </a>
+
+        <!-- Version 2 -->
+        <a href="flat_management_app_v2/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 2.0</div>
+          <h2 class="version-title">Version 2</h2>
+        </a>
+
+        <!-- Version 3 -->
+        <a href="flat_management_app_v3/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 3.0</div>
+          <h2 class="version-title">Version 3</h2>
+        </a>
+
+        <!-- Version 4 -->
+        <a href="flat_management_app_v4/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 4.0</div>
+          <h2 class="version-title">Version 4</h2>
+        </a>
+
+        <!-- Version 5 -->
+        <a href="flat_management_app_v5/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 5.0</div>
+          <h2 class="version-title">Version 5</h2>
+        </a>
+
+        <!-- Version 6 -->
+        <a href="flat_management_app_v6/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 6.0</div>
+          <h2 class="version-title">Version 6</h2>
+        </a>
+
+        <!-- Version 7 -->
+        <a href="flat_management_app_v7/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 7.0</div>
+          <h2 class="version-title">Version 7</h2>
+        </a>
+
+        <!-- Version 8 -->
+        <a href="flat_management_app_v8/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 8.0</div>
+          <h2 class="version-title">Version 8</h2>
+        </a>
+
+        <!-- Version 9 -->
+        <a href="flat_management_app_v9/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 9.0</div>
+          <h2 class="version-title">Version 9</h2>
+        </a>
+
+        <!-- Version 10 -->
+        <a href="flat_management_app_v10/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 10.0</div>
+          <h2 class="version-title">Version 10</h2>
+        </a>
+
+        <!-- Version 11 -->
+        <a href="flat_management_app_v11/index.html" class="version-card">
+          <div class="version-status"></div>
+          <div class="version-number">Version 11.0</div>
+          <h2 class="version-title">Version 11</h2>
+        </a>
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Flat Management App Development • Last updated: <time id="last-updated"></time></p>
+    </footer>
+
+    <script>
+      // Update last modified date
+      document.getElementById("last-updated").textContent = new Date().toLocaleDateString();
+    </script>
+  </body>
+</html>

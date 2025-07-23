@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ჩვენი ბინები - ქირავნობის პლატფორმა</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <a
+      href="../index.html"
+      style="position: fixed; top: 2rem; left: 2rem; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-weight: 500; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transition: all 0.2s ease; z-index: 1000"
+      onmouseover="this.style.background='#2563eb'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(59, 130, 246, 0.4)';"
+      onmouseout="this.style.background='#3b82f6'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)';"
+      >← Back</a
+    >
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <h1 class="logo">ჩვენი ბინები</h1>
+        <div class="language-switcher">
+          <select id="language-select">
+            <option value="ka">ქართული</option>
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+          <h2 class="hero-title">იპოვეთ თქვენი იდეალური ბინა ბათუმში</h2>
+          <p class="hero-subtitle">კომფორტული ბინები ზღვის სიახლოვეს</p>
+        </section>
+
+        <!-- Properties Grid -->
+        <section class="properties">
+          <h3 class="section-title">ხელმისაწვდომი ბინები</h3>
+          <div class="property-grid">
+            <!-- Property 1 -->
+            <article class="property-card">
+              <div class="property-image">
+                <img src="https://via.placeholder.com/300x200/e0e0e0/808080?text=ბინა+1" alt="ბინა 1 - ნიუ ვეივი" />
+              </div>
+              <div class="property-content">
+                <h4 class="property-title">ბინა 1 - ნიუ ვეივი</h4>
+                <p class="property-description">ბათუმი, ჟიული შარტავას 10 • 5-7 წუთი ზღვამდე</p>
+                <div class="property-details">
+                  <span class="property-type">სტუდიო</span>
+                  <span class="property-capacity">4 სტუმარი</span>
+                </div>
+                <div class="property-price">
+                  <span class="price-july">ივლისი: 100-110₾</span>
+                  <span class="price-august">აგვისტო: 120₾</span>
+                </div>
+                <a href="property-detail.html?id=1" class="btn btn-primary">ნახე დეტალები</a>
+              </div>
+            </article>
+
+            <!-- Property 2 -->
+            <article class="property-card">
+              <div class="property-image">
+                <img src="https://via.placeholder.com/300x200/e0e0e0/808080?text=ბინა+2" alt="ბინა 2 - ნიუ ვეივი" />
+              </div>
+              <div class="property-content">
+                <h4 class="property-title">ბინა 2 - ნიუ ვეივი</h4>
+                <p class="property-description">ბათუმი, ჟიული შარტავას 10 • 5-7 წუთი ზღვამდე</p>
+                <div class="property-details">
+                  <span class="property-type">სტუდიო</span>
+                  <span class="property-capacity">4 სტუმარი</span>
+                </div>
+                <div class="property-price">
+                  <span class="price-july">ივლისი: 100-110₾</span>
+                  <span class="price-august">აგვისტო: 120₾</span>
+                </div>
+                <a href="property-detail.html?id=2" class="btn btn-primary">ნახე დეტალები</a>
+              </div>
+            </article>
+
+            <!-- Property 3 -->
+            <article class="property-card">
+              <div class="property-image">
+                <img src="https://via.placeholder.com/300x200/e0e0e0/808080?text=ბინა+3" alt="ბინა 3 - მეტროსითი" />
+              </div>
+              <div class="property-content">
+                <h4 class="property-title">ბინა 3 - მეტროსითი</h4>
+                <p class="property-description">შერიფ ხიმშიაშვილის 65 • 3-4 წუთი ზღვამდე</p>
+                <div class="property-details">
+                  <span class="property-type">ცალკე საძინებლით</span>
+                  <span class="property-capacity">4 სტუმარი</span>
+                </div>
+                <div class="property-price">
+                  <span class="price-august">აგვისტო: 130₾</span>
+                </div>
+                <a href="property-detail.html?id=3" class="btn btn-primary">ნახე დეტალები</a>
+              </div>
+            </article>
+
+            <!-- Property 4 -->
+            <article class="property-card">
+              <div class="property-image">
+                <img src="https://via.placeholder.com/300x200/e0e0e0/808080?text=ბინა+4" alt="ბინა 4 - მეტროსითი" />
+              </div>
+              <div class="property-content">
+                <h4 class="property-title">ბინა 4 - მეტროსითი</h4>
+                <p class="property-description">შერიფ ხიმშიაშვილის 65 • 3-4 წუთი ზღვამდე</p>
+                <div class="property-details">
+                  <span class="property-type">ცალკე საძინებლით</span>
+                  <span class="property-capacity">3 სტუმარი</span>
+                </div>
+                <div class="property-price">
+                  <span class="price-august">აგვისტო: 130₾</span>
+                </div>
+                <a href="property-detail.html?id=4" class="btn btn-primary">ნახე დეტალები</a>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <nav class="footer-nav">
+          <a href="index.html" class="footer-link active">მთავარი</a>
+          <a href="#about" class="footer-link">ჩვენ შესახებ</a>
+          <a href="#contact" class="footer-link">კონტაქტი</a>
+        </nav>
+        <p class="footer-copyright">© 2024 ჩვენი ბინები. ყველა უფლება დაცულია.</p>
+      </div>
+    </footer>
+  </body>
+</html>

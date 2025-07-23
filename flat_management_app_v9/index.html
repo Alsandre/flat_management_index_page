@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StayEase - Rental Property Management</title>
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #fafafa;
+      }
+
+      /* Typography */
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+      h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        margin-bottom: 1rem;
+      }
+
+      /* Layout containers */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .section {
+        padding: 2rem 0;
+      }
+
+      /* Header */
+      .header {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      .nav-menu {
+        display: none;
+        gap: 2rem;
+      }
+
+      .nav-menu a {
+        text-decoration: none;
+        color: #666;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-menu a:hover {
+        color: #2563eb;
+      }
+
+      .hamburger {
+        font-size: 1.5rem;
+        color: #666;
+        cursor: pointer;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        text-align: center;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+        min-height: 44px;
+        font-size: 1rem;
+      }
+
+      .btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 2px solid #2563eb;
+        color: #2563eb;
+      }
+
+      .btn-outline:hover {
+        background: #2563eb;
+        color: white;
+      }
+
+      .btn-full {
+        width: 100%;
+      }
+
+      /* Cards */
+      .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Search Section */
+      .hero {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        color: white;
+        text-align: center;
+        padding: 3rem 0;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .search-form {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #555;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+        min-height: 44px;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #2563eb;
+      }
+
+      /* Properties Grid */
+      .properties-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .property-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .property-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .property-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(45deg, #e5e7eb, #f3f4f6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-weight: 500;
+      }
+
+      .property-content {
+        padding: 1.5rem;
+      }
+
+      .property-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .property-description {
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .property-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 1rem;
+      }
+
+      /* Footer */
+      .footer {
+        background: #374151;
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 3rem;
+      }
+
+      /* Page Navigation */
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      .page-nav {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: white;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+      }
+
+      .page-nav button {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: #f3f4f6;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .page-nav button:last-child {
+        margin-bottom: 0;
+      }
+
+      .page-nav button:hover {
+        background: #e5e7eb;
+      }
+
+      .page-nav button.active {
+        background: #2563eb;
+        color: white;
+      }
+
+      /* Property Details Page */
+      .property-gallery {
+        margin-bottom: 2rem;
+      }
+
+      .main-image {
+        width: 100%;
+        height: 300px;
+        background: linear-gradient(45deg, #e5e7eb, #f3f4f6);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+
+      .thumbnail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 0.5rem;
+      }
+
+      .thumbnail {
+        height: 80px;
+        background: linear-gradient(45deg, #e5e7eb, #f3f4f6);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .property-info {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .amenity-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        background: #f8fafc;
+        border-radius: 8px;
+      }
+
+      .booking-widget {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 100px;
+      }
+
+      .price-display {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 1rem;
+      }
+
+      .price-breakdown {
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .price-row.total {
+        font-weight: 700;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 0.5rem;
+      }
+
+      /* Booking Form */
+      .booking-form {
+        max-width: 600px;
+        margin: 2rem auto;
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .property-summary {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+      }
+
+      .summary-image {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(45deg, #e5e7eb, #f3f4f6);
+        border-radius: 8px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .summary-info h3 {
+        margin-bottom: 0.5rem;
+      }
+
+      .summary-info p {
+        color: #666;
+        margin: 0;
+      }
+
+      .form-note {
+        background: #dbeafe;
+        color: #1e40af;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      /* Admin Dashboard */
+      .admin-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        min-height: calc(100vh - 120px);
+      }
+
+      .admin-sidebar {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        order: 2;
+      }
+
+      .admin-main {
+        order: 1;
+      }
+
+      .sidebar-nav {
+        list-style: none;
+      }
+
+      .sidebar-nav li {
+        margin-bottom: 0.5rem;
+      }
+
+      .sidebar-nav a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: #666;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+
+      .sidebar-nav a:hover,
+      .sidebar-nav a.active {
+        background: #2563eb;
+        color: white;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2563eb;
+        display: block;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .calendar-container {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: 150px repeat(30, 40px);
+        gap: 1px;
+        background: #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+        min-width: 1350px;
+      }
+
+      .calendar-header,
+      .calendar-cell {
+        background: white;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+      }
+
+      .calendar-header {
+        font-weight: 600;
+        background: #f3f4f6;
+      }
+
+      .property-name-cell {
+        text-align: left;
+        font-weight: 500;
+        background: #f8fafc;
+      }
+
+      .calendar-cell.available {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .calendar-cell.booked {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .calendar-cell.blocked {
+        background: #fed7aa;
+        color: #c2410c;
+      }
+
+      .calendar-legend {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+      }
+
+      /* Responsive Design */
+      @media (min-width: 640px) {
+        .container {
+          padding: 0 2rem;
+        }
+
+        .search-form {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr auto;
+          gap: 1rem;
+          align-items: end;
+        }
+
+        .form-group {
+          margin-bottom: 0;
+        }
+
+        .properties-grid {
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .hamburger {
+          display: none;
+        }
+
+        .nav-menu {
+          display: flex;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .admin-layout {
+          grid-template-columns: 250px 1fr;
+        }
+
+        .admin-sidebar {
+          order: 1;
+        }
+
+        .admin-main {
+          order: 2;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .property-details-layout {
+          display: grid;
+          grid-template-columns: 2fr 1fr;
+          gap: 2rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .properties-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Hide page navigation on larger screens for demo */
+      @media (min-width: 768px) {
+        .page-nav {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="../index.html"
+      style="position: fixed; top: 2rem; left: 2rem; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-family: 'Segoe UI', sans-serif; font-weight: 500; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transition: all 0.2s ease; z-index: 1000"
+      onmouseover="this.style.background='#2563eb'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(59, 130, 246, 0.4)';"
+      onmouseout="this.style.background='#3b82f6'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59, 130, 246, 0.3)';"
+      >← Back</a
+    >
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="#" class="logo" onclick="showPage('home')">StayEase</a>
+          <nav class="nav-menu">
+            <a href="#" onclick="showPage('home')">Properties</a>
+            <a href="#">Contact</a>
+          </nav>
+          <div class="hamburger">☰</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page 1: Property Listing Homepage -->
+    <div id="home" class="page active">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="container">
+          <h1>Find your perfect stay</h1>
+          <p>Discover beautiful rental properties for your next getaway</p>
+
+          <div class="search-form">
+            <div class="form-group">
+              <label class="form-label">Check-in</label>
+              <input type="date" class="form-input" value="2024-01-15" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Check-out</label>
+              <input type="date" class="form-input" value="2024-01-18" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Guests</label>
+              <select class="form-input">
+                <option>1 Guest</option>
+                <option>2 Guests</option>
+                <option>3 Guests</option>
+                <option>4 Guests</option>
+                <option>5+ Guests</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button class="btn">Search</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Properties Section -->
+      <section class="section">
+        <div class="container">
+          <h2>Available Properties</h2>
+          <div class="properties-grid">
+            <div class="property-card">
+              <div class="property-image">Property Image</div>
+              <div class="property-content">
+                <h3 class="property-name">Central Studio</h3>
+                <p class="property-description">Modern studio apartment in the heart of downtown. Perfect for business travelers and couples seeking urban convenience.</p>
+                <div class="property-price">$89/night</div>
+                <button class="btn btn-full" onclick="showPage('details')">View Details</button>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Property Image</div>
+              <div class="property-content">
+                <h3 class="property-name">Garden View Apartment</h3>
+                <p class="property-description">Peaceful 2-bedroom apartment with beautiful garden views. Ideal for families and longer stays with full kitchen.</p>
+                <div class="property-price">$125/night</div>
+                <button class="btn btn-full" onclick="showPage('details')">View Details</button>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Property Image</div>
+              <div class="property-content">
+                <h3 class="property-name">City Loft</h3>
+                <p class="property-description">Stylish industrial loft with exposed brick walls and high ceilings. Features modern amenities and artistic touches.</p>
+                <div class="property-price">$150/night</div>
+                <button class="btn btn-full" onclick="showPage('details')">View Details</button>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Property Image</div>
+              <div class="property-content">
+                <h3 class="property-name">Riverside Cottage</h3>
+                <p class="property-description">Charming cottage by the river with private deck. Perfect for nature lovers seeking tranquility while staying connected.</p>
+                <div class="property-price">$110/night</div>
+                <button class="btn btn-full" onclick="showPage('details')">View Details</button>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Property Image</div>
+              <div class="property-content">
+                <h3 class="property-name">Mountain View Suite</h3>
+                <p class="property-description">Luxury suite with panoramic mountain views. Features premium amenities, spa-like bathroom, and private balcony.</p>
+                <div class="property-price">$200/night</div>
+                <button class="btn btn-full" onclick="showPage('details')">View Details</button>
+              </div>
+            </div>
+
+            <div class="property-card">
+              <div class="property-image">Property Image</div>
+              <div class="property-content">
+                <h3 class="property-name">Cozy Beach House</h3>
+                <p class="property-description">Relaxing beach house just steps from the shore. Perfect for beach lovers with outdoor shower and ocean breeze.</p>
+                <div class="property-price">$175/night</div>
+                <button class="btn btn-full" onclick="showPage('details')">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Page 2: Property Details -->
+    <div id="details" class="page">
+      <section class="section">
+        <div class="container">
+          <div class="property-details-layout">
+            <div class="property-main">
+              <!-- Image Gallery -->
+              <div class="property-gallery">
+                <div class="main-image">Main Property Image</div>
+                <div class="thumbnail-grid">
+                  <div class="thumbnail">📷 1</div>
+                  <div class="thumbnail">📷 2</div>
+                  <div class="thumbnail">📷 3</div>
+                  <div class="thumbnail">📷 4</div>
+                  <div class="thumbnail">📷 5</div>
+                </div>
+              </div>
+
+              <!-- Property Information -->
+              <div class="property-info">
+                <h1>Central Studio</h1>
+                <p><strong>📍 123 Downtown Street, City Center</strong></p>
+
+                <h3>About this place</h3>
+                <p>Experience urban living at its finest in this beautifully designed studio apartment. Located in the vibrant heart of downtown, you'll be walking distance from the best restaurants, shops, and entertainment venues the city has to offer.</p>
+
+                <p>The space features modern furnishings, a fully equipped kitchenette, comfortable sleeping area, and a stylish bathroom. Large windows provide plenty of natural light and city views. High-speed WiFi and smart TV are included for your convenience.</p>
+
+                <h3>Amenities</h3>
+                <div class="amenities-grid">
+                  <div class="amenity-item">
+                    <span>📶</span>
+                    <span>Free WiFi</span>
+                  </div>
+                  <div class="amenity-item">
+                    <span>📺</span>
+                    <span>Smart TV</span>
+                  </div>
+                  <div class="amenity-item">
+                    <span>🍳</span>
+                    <span>Kitchen</span>
+                  </div>
+                  <div class="amenity-item">
+                    <span>❄️</span>
+                    <span>Air Conditioning</span>
+                  </div>
+                  <div class="amenity-item">
+                    <span>🧺</span>
+                    <span>Washer/Dryer</span>
+                  </div>
+                  <div class="amenity-item">
+                    <span>🅿️</span>
+                    <span>Parking</span>
+                  </div>
+                </div>
+
+                <div class="card" style="margin-top: 2rem; padding: 1.5rem; background: #f0f9ff">
+                  <h3>Check-in Instructions</h3>
+                  <p><strong>🔑 Keys located in blue lockbox by entrance</strong></p>
+                  <p>Code will be provided 24 hours before arrival. Check-in: 3:00 PM | Check-out: 11:00 AM</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-sidebar">
+              <div class="booking-widget">
+                <div class="price-display">$89<span style="font-size: 1rem; font-weight: normal">/night</span></div>
+
+                <div class="form-group">
+                  <label class="form-label">Check-in</label>
+                  <input type="date" class="form-input" value="2024-01-15" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Check-out</label>
+                  <input type="date" class="form-input" value="2024-01-18" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Guests</label>
+                  <select class="form-input">
+                    <option>2 Guests</option>
+                    <option>1 Guest</option>
+                    <option>3 Guests</option>
+                    <option>4 Guests</option>
+                  </select>
+                </div>
+
+                <div class="price-breakdown">
+                  <div class="price-row">
+                    <span>$89 × 3 nights</span>
+                    <span>$267</span>
+                  </div>
+                  <div class="price-row">
+                    <span>Cleaning fee</span>
+                    <span>$25</span>
+                  </div>
+                  <div class="price-row">
+                    <span>Service fee</span>
+                    <span>$18</span>
+                  </div>
+                  <div class="price-row total">
+                    <span>Total</span>
+                    <span>$310</span>
+                  </div>
+                </div>
+
+                <button class="btn btn-full" onclick="showPage('booking')">Request Booking</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Page 3: Booking Request Form -->
+    <div id="booking" class="page">
+      <section class="section">
+        <div class="container">
+          <div class="booking-form">
+            <h1>Request Booking</h1>
+
+            <div class="property-summary">
+              <div class="summary-image">📷</div>
+              <div class="summary-info">
+                <h3>Central Studio</h3>
+                <p>Jan 15 - Jan 18, 2024 • 2 Guests</p>
+                <p><strong>Total: $310</strong></p>
+              </div>
+            </div>
+
+            <form>
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" placeholder="Enter your full name" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="your.email@example.com" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" placeholder="+1 (555) 123-4567" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Selected Dates</label>
+                <input type="text" class="form-input" value="January 15 - January 18, 2024" readonly style="background: #f8fafc" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Special Requests or Questions</label>
+                <textarea class="form-input" rows="4" placeholder="Let us know if you have any special requests, questions about the property, or need assistance with anything..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-full">Send Booking Request</button>
+
+              <div class="form-note">
+                <p><strong>📧 We'll confirm availability within 2 hours</strong></p>
+                <p>You'll receive a confirmation email with payment instructions and check-in details once your booking is approved.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Page 4: Admin Dashboard -->
+    <div id="admin" class="page">
+      <section class="section">
+        <div class="container">
+          <div class="admin-layout">
+            <aside class="admin-sidebar">
+              <h3>Admin Panel</h3>
+              <nav>
+                <ul class="sidebar-nav">
+                  <li><a href="#" class="active">📊 Dashboard</a></li>
+                  <li><a href="#">📅 Calendar</a></li>
+                  <li><a href="#">🏠 Properties</a></li>
+                  <li><a href="#">📝 Bookings</a></li>
+                  <li><a href="#">⚙️ Settings</a></li>
+                </ul>
+              </nav>
+            </aside>
+
+            <main class="admin-main">
+              <h1>Dashboard Overview</h1>
+
+              <!-- Quick Stats -->
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <span class="stat-number">24</span>
+                  <span class="stat-label">Bookings This Month</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-number">$12,450</span>
+                  <span class="stat-label">Monthly Revenue</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-number">78%</span>
+                  <span class="stat-label">Occupancy Rate</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-number">4</span>
+                  <span class="stat-label">Available Properties</span>
+                </div>
+              </div>
+
+              <!-- Monthly Calendar -->
+              <div class="calendar-container">
+                <h2>January 2024 - Property Availability</h2>
+                <div class="calendar-grid">
+                  <!-- Header Row -->
+                  <div class="calendar-header">Property</div>
+                  <div class="calendar-header">1</div>
+                  <div class="calendar-header">2</div>
+                  <div class="calendar-header">3</div>
+                  <div class="calendar-header">4</div>
+                  <div class="calendar-header">5</div>
+                  <div class="calendar-header">6</div>
+                  <div class="calendar-header">7</div>
+                  <div class="calendar-header">8</div>
+                  <div class="calendar-header">9</div>
+                  <div class="calendar-header">10</div>
+                  <div class="calendar-header">11</div>
+                  <div class="calendar-header">12</div>
+                  <div class="calendar-header">13</div>
+                  <div class="calendar-header">14</div>
+                  <div class="calendar-header">15</div>
+                  <div class="calendar-header">16</div>
+                  <div class="calendar-header">17</div>
+                  <div class="calendar-header">18</div>
+                  <div class="calendar-header">19</div>
+                  <div class="calendar-header">20</div>
+                  <div class="calendar-header">21</div>
+                  <div class="calendar-header">22</div>
+                  <div class="calendar-header">23</div>
+                  <div class="calendar-header">24</div>
+                  <div class="calendar-header">25</div>
+                  <div class="calendar-header">26</div>
+                  <div class="calendar-header">27</div>
+                  <div class="calendar-header">28</div>
+                  <div class="calendar-header">29</div>
+                  <div class="calendar-header">30</div>
+                  <div class="calendar-header">31</div>
+
+                  <!-- Central Studio Row -->
+                  <div class="calendar-cell property-name-cell">Central Studio</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell blocked">M</div>
+                  <div class="calendar-cell blocked">M</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+
+                  <!-- Garden View Apartment Row -->
+                  <div class="calendar-cell property-name-cell">Garden View Apt</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+
+                  <!-- City Loft Row -->
+                  <div class="calendar-cell property-name-cell">City Loft</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+
+                  <!-- Riverside Cottage Row -->
+                  <div class="calendar-cell property-name-cell">Riverside Cottage</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell blocked">M</div>
+                  <div class="calendar-cell blocked">M</div>
+                  <div class="calendar-cell blocked">M</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+
+                  <!-- Mountain View Suite Row -->
+                  <div class="calendar-cell property-name-cell">Mountain View Suite</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+
+                  <!-- Cozy Beach House Row -->
+                  <div class="calendar-cell property-name-cell">Cozy Beach House</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell available">A</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                  <div class="calendar-cell booked">B</div>
+                </div>
+
+                <div class="calendar-legend">
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #dcfce7"></div>
+                    <span>Available (A)</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #dbeafe"></div>
+                    <span>Booked (B)</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #fed7aa"></div>
+                    <span>Blocked/Maintenance (M)</span>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2024 StayEase. Contact us: hello@stayease.com | (555) 123-4567</p>
+        <p>Professional property management with a personal touch</p>
+      </div>
+    </footer>
+
+    <!-- Page Navigation (for prototype demo) -->
+    <div class="page-nav">
+      <button onclick="showPage('home')" class="active">Home</button>
+      <button onclick="showPage('details')">Details</button>
+      <button onclick="showPage('booking')">Booking</button>
+      <button onclick="showPage('admin')">Admin</button>
+    </div>
+
+    <script>
+      function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll(".page").forEach((page) => {
+          page.classList.remove("active");
+        });
+
+        // Show selected page
+        document.getElementById(pageId).classList.add("active");
+
+        // Update navigation buttons
+        document.querySelectorAll(".page-nav button").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        event.target.classList.add("active");
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }
+    </script>
+  </body>
+</html>

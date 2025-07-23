@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ჯავშანი | ჩვენი ბინები</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">ჩვენი ბინები</a>
+            <div class="language-switcher">
+                <select id="language-select">
+                    <option value="ka">ქართული</option>
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" style="padding: 1rem 0;">
+                <a href="index.html" style="color: #667eea; text-decoration: none;">მთავარი</a>
+                <span style="margin: 0 0.5rem; color: #6c757d;">›</span>
+                <a href="property-detail.html" style="color: #667eea; text-decoration: none;">ბინა 1 - ნიუ ვეივი</a>
+                <span style="margin: 0 0.5rem; color: #6c757d;">›</span>
+                <span style="color: #6c757d;">ჯავშანი</span>
+            </nav>
+
+            <!-- Booking Form -->
+            <div class="booking-container">
+                <div class="booking-form-wrapper">
+                    <div class="booking-header">
+                        <h1 class="booking-title">ბინის ჯავშანი</h1>
+                        <div class="selected-property">
+                            <h3>არჩეული ბინა:</h3>
+                            <p><strong>ბინა 1 - ნიუ ვეივი</strong></p>
+                            <p>ბათუმი, ჟიული შარტავას 10 • 5-7 წუთი ზღვამდე</p>
+                        </div>
+                    </div>
+
+                    <!-- Success Message (Hidden by default) -->
+                    <div id="success-message" class="success-message" style="display: none;">
+                        <h3>✅ თქვენი ჯავშანი მიღებულია!</h3>
+                        <p>ჩვენ დაგიკავშირდებით ამ ნომერზე: <span id="phone-display"></span></p>
+                        <p>ჯავშნის დეტალები გაიგზავნება ელფოსტაზე და SMS-ით.</p>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <form id="booking-form" class="booking-form">
+                        <div class="form-section">
+                            <h3 class="section-title">პირადი ინფორმაცია</h3>
+                            
+                            <div class="form-group">
+                                <label for="name" class="form-label">სახელი და გვარი *</label>
+                                <input type="text" id="name" name="name" class="form-input" required 
+                                       placeholder="მაგ: გიორგი მელაძე">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">ტელეფონის ნომერი *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" required 
+                                       placeholder="მაგ: +995 555 123 456">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">ელფოსტა</label>
+                                <input type="email" id="email" name="email" class="form-input" 
+                                       placeholder="მაგ: giorgi@example.com">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-title">ჯავშნის დეტალები</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="checkin" class="form-label">ჩასახლების თარიღი *</label>
+                                    <input type="date" id="checkin" name="checkin" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkout" class="form-label">გასახლების თარიღი *</label>
+                                    <input type="date" id="checkout" name="checkout" class="form-input" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="guests" class="form-label">სტუმრების რაოდენობა *</label>
+                                <select id="guests" name="guests" class="form-select" required>
+                                    <option value="">აირჩიეთ...</option>
+                                    <option value="1">1 სტუმარი</option>
+                                    <option value="2">2 სტუმარი</option>
+                                    <option value="3">3 სტუმარი</option>
+                                    <option value="4">4 სტუმარი</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="special-requests" class="form-label">განსაკუთრებული მოთხოვნები</label>
+                                <textarea id="special-requests" name="special-requests" class="form-textarea" rows="4" 
+                                          placeholder="მაგ: ადრეული ჩასახლება, დამატებითი ბალიშები, ბავშვისთვის საწოლი..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-title">ფასის ანგარიშგება</h3>
+                            <div class="price-calculator">
+                                <div class="price-line">
+                                    <span>ღამეების რაოდენობა:</span>
+                                    <span id="nights-count">0</span>
+                                </div>
+                                <div class="price-line">
+                                    <span>ღამის ფასი:</span>
+                                    <span id="night-price">120₾</span>
+                                </div>
+                                <div class="price-line total-price">
+                                    <span><strong>სულ:</strong></span>
+                                    <span id="total-price"><strong>0₾</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                                უკან დაბრუნება
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                ჯავშნის დადასტურება
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="index.html" class="footer-link">მთავარი</a>
+                <a href="#about" class="footer-link">ჩვენ შესახებ</a>
+                <a href="#contact" class="footer-link">კონტაქტი</a>
+            </nav>
+            <p class="footer-copyright">© 2024 ჩვენი ბინები. ყველა უფლება დაცულია.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Calculate price based on dates
+        function calculatePrice() {
+            const checkin = document.getElementById('checkin').value;
+            const checkout = document.getElementById('checkout').value;
+            
+            if (checkin && checkout) {
+                const checkinDate = new Date(checkin);
+                const checkoutDate = new Date(checkout);
+                
+                if (checkoutDate > checkinDate) {
+                    const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+                    const pricePerNight = 120; // Default to August price
+                    const total = nights * pricePerNight;
+                    
+                    document.getElementById('nights-count').textContent = nights;
+                    document.getElementById('total-price').innerHTML = `<strong>${total}₾</strong>`;
+                } else {
+                    document.getElementById('nights-count').textContent = '0';
+                    document.getElementById('total-price').innerHTML = '<strong>0₾</strong>';
+                }
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const phone = document.getElementById('phone').value;
+            const name = document.getElementById('name').value;
+            
+            // Show success message
+            document.getElementById('phone-display').textContent = phone;
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('booking-form').style.display = 'none';
+            
+            // Scroll to top to show success message
+            window.scrollTo(0, 0);
+        });
+
+        // Add event listeners for date changes
+        document.getElementById('checkin').addEventListener('change', calculatePrice);
+        document.getElementById('checkout').addEventListener('change', calculatePrice);
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkin').min = today;
+        document.getElementById('checkout').min = today;
+    </script>
+
+    <style>
+        /* Booking Page Specific Styles */
+        .booking-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .booking-form-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .booking-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .booking-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .selected-property {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .selected-property h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .selected-property p {
+            margin: 0.25rem 0;
+        }
+
+        .booking-form {
+            padding: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .price-calculator {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+        }
+
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .price-line:last-child {
+            margin-bottom: 0;
+        }
+
+        .total-price {
+            border-top: 2px solid #dee2e6;
+            padding-top: 0.75rem;
+            margin-top: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .form-actions .btn {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        @media (min-width: 768px) {
+            .form-actions {
+                justify-content: flex-end;
+            }
+            
+            .form-actions .btn {
+                flex: none;
+                width: auto;
+            }
+        }
+
+        /* Form validation styles */
+        .form-input:invalid {
+            border-color: #dc3545;
+        }
+
+        .form-input:valid {
+            border-color: #28a745;
+        }
+
+        /* Success message animations */
+        .success-message {
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 

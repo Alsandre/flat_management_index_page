@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Your Stay - Our Family Rentals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+          <h1 class="text-2xl sm:text-3xl font-bold text-emerald-700">Book Your Stay at Cozy Downtown Loft</h1>
+          <a href="property-detail.html" class="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium transition-colors">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Back to Property Details
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Booking Form -->
+        <div class="lg:col-span-2">
+          <section class="bg-white rounded-xl shadow-md p-6 sm:p-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Reservation Details</h2>
+
+            <form class="space-y-6">
+              <!-- Guest Information -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label for="fullName" class="block text-sm font-medium text-gray-700 mb-2"> Full Name * </label>
+                  <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors" />
+                </div>
+
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-700 mb-2"> Email Address * </label>
+                  <input type="email" id="email" name="email" required placeholder="your.email@example.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors" />
+                </div>
+              </div>
+
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2"> Phone Number * </label>
+                <input type="tel" id="phone" name="phone" required placeholder="(555) 123-4567" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors" />
+              </div>
+
+              <!-- Stay Dates -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label for="checkin" class="block text-sm font-medium text-gray-700 mb-2"> Check-in Date * </label>
+                  <input type="date" id="checkin" name="checkin" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors" />
+                </div>
+
+                <div>
+                  <label for="checkout" class="block text-sm font-medium text-gray-700 mb-2"> Check-out Date * </label>
+                  <input type="date" id="checkout" name="checkout" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors" />
+                </div>
+              </div>
+
+              <div>
+                <label for="guests" class="block text-sm font-medium text-gray-700 mb-2"> Number of Guests * </label>
+                <select id="guests" name="guests" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors">
+                  <option value="">Select number of guests</option>
+                  <option value="1">1 Guest</option>
+                  <option value="2">2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4 Guests</option>
+                  <option value="5">5+ Guests</option>
+                </select>
+              </div>
+
+              <!-- Special Requests -->
+              <div>
+                <label for="requests" class="block text-sm font-medium text-gray-700 mb-2">
+                  Special Requests
+                  <span class="text-gray-500 font-normal">(Optional)</span>
+                </label>
+                <textarea id="requests" name="requests" rows="4" placeholder="Let us know if you have any special requests or needs for your stay..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors resize-none"></textarea>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="pt-4">
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200 text-lg">Confirm Booking</button>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <!-- Booking Summary & Info -->
+        <div class="lg:col-span-1">
+          <!-- Property Summary -->
+          <section class="bg-white rounded-xl shadow-md p-6 mb-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Your Selection</h3>
+
+            <div class="mb-4">
+              <img src="https://placehold.co/300x200/E8F4FD/4A90A4?text=Cozy+Downtown+Loft" alt="Cozy Downtown Loft" class="w-full h-32 object-cover rounded-lg" />
+            </div>
+
+            <h4 class="font-semibold text-gray-800 mb-2">Cozy Downtown Loft</h4>
+            <p class="text-gray-600 text-sm mb-4">Modern loft in the heart of downtown with exposed brick walls and city views.</p>
+
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-600">Location:</span>
+                <span class="text-gray-800">Downtown District</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Floor:</span>
+                <span class="text-gray-800">3rd Floor</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600">Access:</span>
+                <span class="text-gray-800">Elevator Available</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Important Information -->
+          <section class="bg-emerald-50 rounded-xl p-6 mb-6">
+            <h3 class="text-lg font-semibold text-emerald-800 mb-4 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Important Notes
+            </h3>
+            <ul class="space-y-2 text-sm text-emerald-700">
+              <li class="flex items-start">
+                <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                Keys available in lockbox (Code: 1234)
+              </li>
+              <li class="flex items-start">
+                <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                Wi-Fi: OurRentals / guestwifi
+              </li>
+              <li class="flex items-start">
+                <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                Check-in: 3:00 PM or later
+              </li>
+              <li class="flex items-start">
+                <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                Check-out: 11:00 AM or earlier
+              </li>
+            </ul>
+          </section>
+
+          <!-- Prototype Notice -->
+          <section class="bg-blue-50 rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Prototype Notice
+            </h3>
+            <p class="text-blue-700 text-sm leading-relaxed">This is a prototype booking system. No actual booking will be made, and no payment will be processed. In a real application, you would receive a confirmation email with all booking details and payment information.</p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="text-center text-gray-600">
+          <p>&copy; 2024 Our Family Rentals. Making your stay comfortable and memorable.</p>
+          <p class="mt-2 text-sm">
+            <a href="property-detail.html" class="hover:text-emerald-600 transition-colors mr-4">Back to Property</a>
+            <a href="index.html" class="hover:text-emerald-600 transition-colors mr-4">All Properties</a>
+            <a href="admin-login.html" class="hover:text-emerald-600 transition-colors">Admin Portal</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

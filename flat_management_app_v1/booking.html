@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Booking - PropertyStay</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fafafa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .nav-menu {
+            display: none;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #2563eb;
+        }
+
+        .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 1rem 0;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .booking-page {
+            padding: 2rem 0;
+        }
+
+        .booking-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Booking Form */
+        .booking-form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .form-group input[readonly] {
+            background-color: #f9fafb;
+            cursor: not-allowed;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        /* Selected Dates Display */
+        .selected-dates {
+            background: #f0f7ff;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .date-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .date-info:last-child {
+            margin-bottom: 0;
+        }
+
+        .date-label {
+            font-weight: 500;
+            color: #2563eb;
+        }
+
+        .date-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Payment Section */
+        .payment-placeholder {
+            background: #f9fafb;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .payment-placeholder h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .payment-icons {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            color: #9ca3af;
+        }
+
+        /* Booking Summary Sidebar */
+        .booking-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .property-summary {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .property-image-small {
+            width: 80px;
+            height: 80px;
+            background: #e5e7eb;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 0.8rem;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .property-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: #333;
+        }
+
+        .property-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .summary-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-section h4 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .summary-row.total {
+            font-weight: 700;
+            color: #333;
+            font-size: 1.1rem;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        .confirmation-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .confirmation-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .security-note {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f0fdf4;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #166534;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .nav-menu {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .form-grid.two-columns {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .date-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .booking-layout {
+                grid-template-columns: 2fr 1fr;
+                gap: 3rem;
+            }
+
+            .date-info {
+                flex-direction: row;
+                align-items: center;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">PropertyStay</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="property-details.html">Properties</a></li>
+                <li><a href="booking.html">Book Now</a></li>
+                <li><a href="admin-dashboard.html">Admin</a></li>
+            </ul>
+            <button class="menu-toggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> > <a href="property-details.html">Downtown Apartment</a> > Complete Booking
+        </div>
+    </div>
+
+    <!-- Booking Page -->
+    <section class="booking-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Complete Your Booking</h1>
+                <p>Just a few more details and you'll be all set</p>
+            </div>
+
+            <div class="booking-layout">
+                <!-- Booking Form -->
+                <div class="booking-form-section">
+                    <form>
+                        <!-- Selected Dates -->
+                        <div class="form-section">
+                            <h3 class="section-title">Your Stay</h3>
+                            <div class="selected-dates">
+                                <div class="date-info">
+                                    <span class="date-label">Check-in:</span>
+                                    <span class="date-value">March 15, 2024</span>
+                                </div>
+                                <div class="date-info">
+                                    <span class="date-label">Check-out:</span>
+                                    <span class="date-value">March 18, 2024</span>
+                                </div>
+                                <div class="date-info">
+                                    <span class="date-label">Guests:</span>
+                                    <span class="date-value">2 guests</span>
+                                </div>
+                                <div class="date-info">
+                                    <span class="date-label">Duration:</span>
+                                    <span class="date-value">3 nights</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Guest Information -->
+                        <div class="form-section">
+                            <h3 class="section-title">Guest Information</h3>
+                            <div class="form-grid two-columns">
+                                <div class="form-group">
+                                    <label for="first-name">First Name <span class="required">*</span></label>
+                                    <input type="text" id="first-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last Name <span class="required">*</span></label>
+                                    <input type="text" id="last-name" required>
+                                </div>
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="email">Email Address <span class="required">*</span></label>
+                                    <input type="email" id="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number <span class="required">*</span></label>
+                                    <input type="tel" id="phone" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Special Requests -->
+                        <div class="form-section">
+                            <h3 class="section-title">Special Requests</h3>
+                            <div class="form-group">
+                                <label for="special-requests">Special Requests or Comments</label>
+                                <textarea id="special-requests" placeholder="Let us know if you have any special requests, accessibility needs, or questions about your stay..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Payment Information -->
+                        <div class="form-section">
+                            <h3 class="section-title">Payment Information</h3>
+                            <div class="payment-placeholder">
+                                <h4>Secure Payment Processing</h4>
+                                <p>Payment information will be collected securely</p>
+                                <div class="payment-icons">
+                                    <span>💳 VISA</span>
+                                    <span>💳 MasterCard</span>
+                                    <span>💳 AmEx</span>
+                                    <span>💰 PayPal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Booking Summary -->
+                <div class="booking-summary">
+                    <div class="property-summary">
+                        <div class="property-image-small">Downtown<br>Apartment</div>
+                        <div class="property-details">
+                            <h3>Downtown Apartment</h3>
+                            <p>123 Main Street<br>Downtown, City 12345</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-section">
+                        <h4>Booking Details</h4>
+                        <div class="summary-row">
+                            <span>Check-in:</span>
+                            <span>Mar 15, 2024</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Check-out:</span>
+                            <span>Mar 18, 2024</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Guests:</span>
+                            <span>2 guests</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Duration:</span>
+                            <span>3 nights</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-section">
+                        <h4>Price Breakdown</h4>
+                        <div class="summary-row">
+                            <span>$120 × 3 nights</span>
+                            <span>$360</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Cleaning fee</span>
+                            <span>$25</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Service fee</span>
+                            <span>$30</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Taxes</span>
+                            <span>$35</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span>$450</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="confirmation-btn">Confirm Booking</button>
+
+                    <div class="security-note">
+                        🔒 Your booking is protected by our secure payment system and cancellation policy.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 

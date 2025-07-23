@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | StayEase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #fafafa;
+      }
+
+      /* Layout Container */
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: #1f2937;
+        padding: 1.5rem 0;
+        position: fixed;
+        height: 100vh;
+        width: 250px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid #374151;
+      }
+
+      .sidebar-logo {
+        color: #2563eb;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .sidebar-nav {
+        padding: 1.5rem 0;
+      }
+
+      .nav-item {
+        margin-bottom: 0.5rem;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        color: #d1d5db;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        background: #374151;
+        color: #2563eb;
+      }
+
+      .nav-link i {
+        margin-right: 0.75rem;
+        width: 20px;
+      }
+
+      .sidebar-footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 1.5rem;
+        border-top: 1px solid #374151;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        color: #d1d5db;
+      }
+
+      .user-info i {
+        margin-right: 0.5rem;
+        color: #2563eb;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-left: 250px;
+        padding: 2rem;
+      }
+
+      .content-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1f2937;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: #2563eb;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #1d4ed8;
+      }
+
+      .btn-secondary {
+        background: #f3f4f6;
+        color: #374151;
+      }
+
+      .btn-secondary:hover {
+        background: #e5e7eb;
+      }
+
+      /* Stats Cards */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+      }
+
+      .stat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+      }
+
+      .stat-title {
+        font-size: 0.875rem;
+        color: #6b7280;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .stat-icon.blue {
+        background: #2563eb;
+      }
+      .stat-icon.green {
+        background: #059669;
+      }
+      .stat-icon.orange {
+        background: #d97706;
+      }
+      .stat-icon.purple {
+        background: #7c3aed;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-change {
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .stat-change.positive {
+        color: #059669;
+      }
+
+      .stat-change.negative {
+        color: #dc2626;
+      }
+
+      /* Calendar Section */
+      .calendar-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .calendar-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1f2937;
+      }
+
+      .calendar-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .month-selector {
+        padding: 0.5rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 6px;
+        background: white;
+        font-weight: 500;
+      }
+
+      /* Legend */
+      .calendar-legend {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+      }
+
+      .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+      }
+
+      .legend-color.available {
+        background: #10b981;
+      }
+      .legend-color.booked {
+        background: #2563eb;
+      }
+      .legend-color.maintenance {
+        background: #f59e0b;
+      }
+
+      /* Calendar Grid */
+      .calendar-grid {
+        overflow-x: auto;
+      }
+
+      .calendar-table {
+        width: 100%;
+        min-width: 800px;
+        border-collapse: collapse;
+      }
+
+      .calendar-table th,
+      .calendar-table td {
+        padding: 0.75rem;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+      }
+
+      .calendar-table th {
+        background: #f9fafb;
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.875rem;
+      }
+
+      .property-row th {
+        background: white;
+        text-align: left;
+        font-weight: 600;
+        color: #1f2937;
+        min-width: 150px;
+      }
+
+      .calendar-cell {
+        height: 60px;
+        position: relative;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+      }
+
+      .calendar-cell:hover {
+        opacity: 0.8;
+      }
+
+      .calendar-cell.available {
+        background: #d1fae5;
+      }
+
+      .calendar-cell.booked {
+        background: #dbeafe;
+      }
+
+      .calendar-cell.maintenance {
+        background: #fef3c7;
+      }
+
+      .cell-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        gap: 0.25rem;
+      }
+
+      .guest-name {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .booking-type {
+        font-size: 0.625rem;
+        color: #6b7280;
+        text-transform: uppercase;
+      }
+
+      /* Mobile Sidebar */
+      .mobile-menu-btn {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1000;
+        background: #1f2937;
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .dashboard-container {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+          z-index: 1000;
+        }
+
+        .sidebar.open {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .sidebar-overlay.show {
+          display: block;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .calendar-legend {
+          gap: 1rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 1rem;
+          padding-top: 4rem;
+        }
+
+        .content-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .calendar-section {
+          padding: 1rem;
+        }
+
+        .calendar-legend {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .calendar-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .calendar-table th,
+        .calendar-table td {
+          padding: 0.5rem;
+          font-size: 0.75rem;
+        }
+
+        .calendar-cell {
+          height: 50px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Mobile Menu Button -->
+      <button class="mobile-menu-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Sidebar Overlay -->
+      <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <a href="#" class="sidebar-logo">StayEase Admin</a>
+        </div>
+
+        <nav class="sidebar-nav">
+          <div class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="fas fa-chart-pie"></i>
+              Dashboard
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-calendar-alt"></i>
+              Calendar
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-home"></i>
+              Properties
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-bookmark"></i>
+              Bookings
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-users"></i>
+              Guests
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-dollar-sign"></i>
+              Revenue
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-cog"></i>
+              Settings
+            </a>
+          </div>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <span>Admin User</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Content Header -->
+        <div class="content-header">
+          <h1 class="page-title">Dashboard Overview</h1>
+          <div class="header-actions">
+            <a href="#" class="btn btn-secondary">
+              <i class="fas fa-download"></i>
+              Export Data
+            </a>
+            <a href="#" class="btn btn-primary">
+              <i class="fas fa-plus"></i>
+              Add Property
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div>
+                <div class="stat-title">Total Bookings</div>
+                <div class="stat-value">127</div>
+              </div>
+              <div class="stat-icon blue">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+            </div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>12% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div>
+                <div class="stat-title">Monthly Revenue</div>
+                <div class="stat-value">$18,400</div>
+              </div>
+              <div class="stat-icon green">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+            </div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>8% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div>
+                <div class="stat-title">Occupancy Rate</div>
+                <div class="stat-value">82%</div>
+              </div>
+              <div class="stat-icon orange">
+                <i class="fas fa-chart-line"></i>
+              </div>
+            </div>
+            <div class="stat-change negative">
+              <i class="fas fa-arrow-down"></i>
+              <span>3% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div>
+                <div class="stat-title">Available Properties</div>
+                <div class="stat-value">4</div>
+              </div>
+              <div class="stat-icon purple">
+                <i class="fas fa-home"></i>
+              </div>
+            </div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>2 new this month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar Section -->
+        <div class="calendar-section">
+          <div class="calendar-header">
+            <h2 class="calendar-title">Property Availability Calendar</h2>
+            <div class="calendar-controls">
+              <select class="month-selector">
+                <option>March 2024</option>
+                <option>April 2024</option>
+                <option>May 2024</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Legend -->
+          <div class="calendar-legend">
+            <div class="legend-item">
+              <div class="legend-color available"></div>
+              <span>Available</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color booked"></div>
+              <span>Booked</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color maintenance"></div>
+              <span>Maintenance</span>
+            </div>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div class="calendar-grid">
+            <table class="calendar-table">
+              <thead>
+                <tr>
+                  <th>Property</th>
+                  <th>15</th>
+                  <th>16</th>
+                  <th>17</th>
+                  <th>18</th>
+                  <th>19</th>
+                  <th>20</th>
+                  <th>21</th>
+                  <th>22</th>
+                  <th>23</th>
+                  <th>24</th>
+                  <th>25</th>
+                  <th>26</th>
+                  <th>27</th>
+                  <th>28</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="property-row">
+                  <th>Central Loft</th>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Smith</span>
+                      <span class="booking-type">3 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Smith</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Smith</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Johnson</span>
+                      <span class="booking-type">2 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Johnson</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Davis</span>
+                      <span class="booking-type">4 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Davis</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Davis</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Davis</span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="property-row">
+                  <th>Garden View Studio</th>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Wilson</span>
+                      <span class="booking-type">5 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Wilson</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Wilson</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Wilson</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Wilson</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell maintenance">
+                    <div class="cell-content">
+                      <span class="booking-type">Cleaning</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Brown</span>
+                      <span class="booking-type">3 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Brown</span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="property-row">
+                  <th>City Apartment</th>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Lee</span>
+                      <span class="booking-type">7 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Lee</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Lee</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Lee</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Lee</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Lee</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Lee</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Miller</span>
+                      <span class="booking-type">2 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Miller</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                </tr>
+
+                <tr class="property-row">
+                  <th>Cozy Retreat</th>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Garcia</span>
+                      <span class="booking-type">4 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Garcia</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Garcia</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Garcia</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell maintenance">
+                    <div class="cell-content">
+                      <span class="booking-type">Repair</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell maintenance">
+                    <div class="cell-content">
+                      <span class="booking-type">Repair</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                </tr>
+
+                <tr class="property-row">
+                  <th>Modern Suite</th>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Taylor</span>
+                      <span class="booking-type">6 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Taylor</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Taylor</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Taylor</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Taylor</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Taylor</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Anderson</span>
+                      <span class="booking-type">3 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Anderson</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Anderson</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                </tr>
+
+                <tr class="property-row">
+                  <th>Riverside Studio</th>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">White</span>
+                      <span class="booking-type">2 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">White</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Martinez</span>
+                      <span class="booking-type">5 nights</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Martinez</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Martinez</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Martinez</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell booked">
+                    <div class="cell-content">
+                      <span class="guest-name">Martinez</span>
+                    </div>
+                  </td>
+                  <td class="calendar-cell available"></td>
+                  <td class="calendar-cell available"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.querySelector(".sidebar-overlay");
+
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("show");
+      }
+    </script>
+  </body>
+</html>
